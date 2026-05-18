@@ -56,7 +56,6 @@
             position: relative;
             overflow: hidden;
         }
-        /* 메인 배너 이미지 설정 (나중에 주소 넣기 편하도록 분리) */
         .main-banner img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
         }
@@ -127,21 +126,21 @@
             background-color: var(--white); 
             display: flex; flex-direction: column; 
             box-shadow: var(--shadow); transition: all 0.2s;
-            overflow: hidden; /* 이미지 모서리가 둥글게 잘리도록 설정 */
+            overflow: hidden; 
         }
         .link-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
         
         /* 카드 상단 이미지 영역 */
         .card-image {
             width: 100%;
-            height: 350px; /* 큰 카드에 어울리는 이미지 높이 */
-            background-color: #EFEFEF; /* 이미지가 없을 때 회색 배경 */
+            height: 350px; 
+            background-color: #EFEFEF;
             border-bottom: var(--border);
         }
         .card-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 이미지가 찌그러지지 않고 꽉 차게 */
+            object-fit: cover; 
         }
         
         /* 카드 하단 텍스트 영역 */
@@ -152,7 +151,8 @@
             justify-content: space-between;
         }
         .card-content h4 { font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; word-break: keep-all; }
-        .card-content .link-url { color: var(--sub-text); font-size: 1rem; word-break: break-all; margin-bottom: 20px; }
+        /* 한글 설명이 예쁘게 줄바꿈 되도록 keep-all 로 수정 완료 */
+        .card-content .link-url { color: var(--sub-text); font-size: 1rem; word-break: keep-all; margin-bottom: 20px; }
         .card-content .card-cta { color: var(--mint); font-weight: 700; font-size: 1rem; text-align: right; }
 
         /* 슬라이드 화살표 버튼 */
@@ -203,13 +203,13 @@
 
 <div class="container">
     <section class="main-banner">
-        <img src="여기에_메인배너_이미지_주소나_파일명을_넣으세요.jpg" alt="메인 배너 이미지">
+        <img src="MainBanner.jpg" alt="메인 배너 이미지">
         <span>추후 메인 이미지가 들어갈 영역입니다.</span>
     </section>
 
     <section class="row-2" id="column">
         <div class="poster-col">
-            <img src="여기에_포스터_이미지_주소나_파일명을_넣으세요.jpg" alt="캠페인 포스터 (A4 규격)">
+            <img src="Poster.jpg" alt="캠페인 포스터 (A4 규격)">
             <span style="color: #888; position: absolute;">포스터 이미지 첨부 영역</span>
         </div>
         <a href="column.html" class="column-link-col">
@@ -255,7 +255,7 @@
                 </a>
 
                 <a href="https://mediabiasfactcheck.com" target="_blank" class="link-card">
-                    <div class="card-image"><img src="MediaBiasFactCheck.png" alt="MediaBiasFactCheck.png"></div>
+                    <div class="card-image"><img src="MediaBiasFactCheck.jpeg" alt="MediaBiasFactCheck.jpeg"></div>
                     <div class="card-content">
                         <h4>Media Bias/Fact Check</h4>
                         <p class="link-url">미디어 소스의 정치적 편향성과 팩트체크 신뢰도를 평가하는 사이트</p>
@@ -285,50 +285,56 @@
             <button class="arrow-btn prev-btn">◀</button>
             <div class="slider-track">
                 
-                <a href="https://www.kpf.or.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.kpf.or.kr/front/research/consumerDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600224&link_g_topmenu_id=676f2f0f377b4b19840685a46f69a233&link_g_submenu_id=f193a96c92284493b56f35b5f0eb15e3&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <div class="card-image"><img src="KPF.png" alt="KPF 연구자료"></div>
                     <div class="card-content">
                         <h4>언론수용자 조사 자료 1</h4>
+                        <p class="link-url">한국언론진흥재단: 미디어 수용자의 뉴스 소비 행태 및 인식 조사</p>
                         <p class="card-cta">조사 결과 보기 →</p>
                     </div>
                 </a>
                 
-                <a href="https://www.kpf.or.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.kpf.or.kr/front/research/consumerDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600223&link_g_topmenu_id=676f2f0f377b4b19840685a46f69a233&link_g_submenu_id=f193a96c92284493b56f35b5f0eb15e3&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <div class="card-image"><img src="KPF.png" alt="KPF 연구자료"></div>
                     <div class="card-content">
                         <h4>언론수용자 조사 자료 2</h4>
+                        <p class="link-url">소셜 미디어 및 플랫폼 기반의 매체별 이용 현황 분석</p>
                         <p class="card-cta">조사 결과 보기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.kpf.or.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.kpf.or.kr/front/research/consumerDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=598992&link_g_topmenu_id=676f2f0f377b4b19840685a46f69a233&link_g_submenu_id=f193a96c92284493b56f35b5f0eb15e3&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <div class="card-image"><img src="KPF.png" alt="KPF 연구자료"></div>
                     <div class="card-content">
                         <h4>언론수용자 조사 자료 3</h4>
+                        <p class="link-url">디지털 환경에서의 추천 서비스에 대한 수용자 신뢰도 통계</p>
                         <p class="card-cta">조사 결과 보기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.kpf.or.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.kpf.or.kr/front/research/selfDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600334&link_g_topmenu_id=9dade495161e4a598d44afd169b5e271&link_g_submenu_id=16b7ff86f5b44d94bae6b83d36283511&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <div class="card-image"><img src="KPF.png" alt="KPF 연구자료"></div>
                     <div class="card-content">
                         <h4>미디어 연구 보고서 1</h4>
+                        <p class="link-url">알고리즘 추천 환경에서의 디지털 리터러시 역량 강화 과제</p>
                         <p class="card-cta">보고서 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.kpf.or.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.kpf.or.kr/front/research/selfDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600276&link_g_topmenu_id=9dade495161e4a598d44afd169b5e271&link_g_submenu_id=16b7ff86f5b44d94bae6b83d36283511&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <div class="card-image"><img src="KPF.png" alt="KPF 연구자료"></div>
                     <div class="card-content">
                         <h4>미디어 연구 보고서 2</h4>
+                        <p class="link-url">미디어 플랫폼 알고리즘 투명성 제고 및 수용자 보호 방안</p>
                         <p class="card-cta">보고서 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.kpf.or.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.kpf.or.kr/front/research/selfDetail.do?miv_pageNo=2&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600080&link_g_topmenu_id=9dade495161e4a598d44afd169b5e271&link_g_submenu_id=16b7ff86f5b44d94bae6b83d36283511&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <div class="card-image"><img src="KPF.png" alt="KPF 연구자료"></div>
                     <div class="card-content">
                         <h4>미디어 연구 보고서 3</h4>
+                        <p class="link-url">데이터 기반 맞춤형 정보 제공이 여론 다양성에 미치는 영향</p>
                         <p class="card-cta">보고서 읽기 →</p>
                     </div>
                 </a>
@@ -346,66 +352,74 @@
             <button class="arrow-btn prev-btn">◀</button>
             <div class="slider-track">
                 
-                <a href="https://www.yna.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.yna.co.kr/view/AKR20250925105900518" target="_blank" class="link-card">
+                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>연합뉴스 기사</h4>
+                        <p class="link-url">필터버블 현상의 위험성과 디지털 환경의 편향성 지적</p>
                         <p class="card-cta">기사 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.newsspirit.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.newsspirit.kr/news/articleView.html?idxno=30054" target="_blank" class="link-card">
+                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>뉴스스피릿 기사</h4>
+                        <p class="link-url">알고리즘 추천 시스템이 만들어내는 확증 편향의 그늘</p>
                         <p class="card-cta">기사 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.dentalnews.or.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dentalnews.or.kr/news/article.html?no=46315" target="_blank" class="link-card">
+                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>덴탈뉴스 기사</h4>
+                        <p class="link-url">현대 사회의 정보 습득 방식과 무의식적 알고리즘 의존 현상</p>
                         <p class="card-cta">기사 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.dentalarirang.com..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dentalarirang.com/news/articleView.html?idxno=47471" target="_blank" class="link-card">
+                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>덴탈아리랑 기사</h4>
+                        <p class="link-url">맞춤형 정보 제공의 양면성과 비판적 사고의 중요성</p>
                         <p class="card-cta">기사 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.edaily.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.edaily.co.kr/News/Read?newsId=01725286645315752&mediaCodeNo=257" target="_blank" class="link-card">
+                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>이데일리 기사</h4>
+                        <p class="link-url">소셜 미디어 알고리즘과 확증 편향에 갇힌 사용자들</p>
                         <p class="card-cta">기사 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://brunch.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://brunch.co.kr/@jfrences/90" target="_blank" class="link-card">
+                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>브런치 칼럼</h4>
+                        <p class="link-url">정보 편식 시대를 살아가는 우리가 가져야 할 능동적 태도</p>
                         <p class="card-cta">칼럼 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.dginclusion.com..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dginclusion.com/news/articleView.html?idxno=1329" target="_blank" class="link-card">
+                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>디지털포용 기사</h4>
+                        <p class="link-url">디지털 사회의 알고리즘 소외 현상과 리터러시 교육의 필요성</p>
                         <p class="card-cta">기사 읽기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.yna.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.yna.co.kr/view/AKR20250725162100017" target="_blank" class="link-card">
+                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>연합뉴스 기사 2</h4>
+                        <p class="link-url">플랫폼 추천 시스템의 불투명성과 여론 형성의 편향성 우려</p>
                         <p class="card-cta">기사 읽기 →</p>
                     </div>
                 </a>
@@ -423,50 +437,56 @@
             <button class="arrow-btn prev-btn">◀</button>
             <div class="slider-track">
                 
-                <a href="https://www.dbpia.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12729339" target="_blank" class="link-card">
+                    <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
-                        <h4>DBpia 논문 1</h4>
+                        <h4>DBpia 학술 논문 1</h4>
+                        <p class="link-url">미디어 소비 빈도와 콘텐츠 발견 방식 간의 상관관계 연구</p>
                         <p class="card-cta">논문 보기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.dbpia.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12131761" target="_blank" class="link-card">
+                    <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
-                        <h4>DBpia 논문 2</h4>
+                        <h4>DBpia 학술 논문 2</h4>
+                        <p class="link-url">동영상 플랫폼 사용자 행동 패턴 분석 및 다중회귀 모델링 사례</p>
                         <p class="card-cta">논문 보기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.dbpia.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dbpia.co.kr/journal/detail?nodeId=T16980308" target="_blank" class="link-card">
+                    <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
-                        <h4>DBpia 논문 3</h4>
+                        <h4>DBpia 학술 논문 3</h4>
+                        <p class="link-url">자동재생 및 추천 알고리즘이 사용자 체류 시간에 미치는 영향</p>
                         <p class="card-cta">논문 보기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.dbpia.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11781585" target="_blank" class="link-card">
+                    <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
-                        <h4>DBpia 논문 4</h4>
+                        <h4>DBpia 학술 논문 4</h4>
+                        <p class="link-url">숏폼 콘텐츠 중심의 디지털 환경에서 나타나는 필터버블 양상</p>
                         <p class="card-cta">논문 보기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.dbpia.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11170711" target="_blank" class="link-card">
+                    <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
-                        <h4>DBpia 논문 5</h4>
+                        <h4>DBpia 학술 논문 5</h4>
+                        <p class="link-url">추천 시스템 정교화가 사용자의 능동적 정보 탐색에 미치는 효과</p>
                         <p class="card-cta">논문 보기 →</p>
                     </div>
                 </a>
 
-                <a href="https://www.dbpia.co.kr..." target="_blank" class="link-card">
-                    <div class="card-image"><img src="여기에_이미지_주소나_파일명을_넣으세요.jpg" alt="미리보기 이미지"></div>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE10507023" target="_blank" class="link-card">
+                    <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
-                        <h4>DBpia 논문 6</h4>
+                        <h4>DBpia 학술 논문 6</h4>
+                        <p class="link-url">디지털 환경의 확증 편향 해소를 위한 알고리즘 투명성 제고 방안</p>
                         <p class="card-cta">논문 보기 →</p>
                     </div>
                 </a>
