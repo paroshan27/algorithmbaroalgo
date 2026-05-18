@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알고리즘 바로알고</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        :root {
+            --mint: #00A495;
+            --white: #FFFFFF;
+            --black: #1A1A1A;
+            --gray: #F8F9FA;
+            --sub-text: #666666;
+            --border: 1px solid #EAEAEA;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --round: 12px;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+
+        /* 고정 헤더 */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background-color: var(--white); border-bottom: var(--border);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 60px; z-index: 1000;
+        }
+        header .logo { font-size: 1.5rem; font-weight: 800; color: var(--black); text-decoration: none; }
+        header nav ul { display: flex; gap: 30px; list-style: none; }
+        header nav a { text-decoration: none; color: var(--black); font-weight: 500; font-size: 1rem; transition: 0.2s; }
+        header nav a:hover { color: var(--mint); }
+
+        /* 최상단 배너 (이미지 자리만 남김) */
+        .main-banner {
+            margin-top: 140px;
+            background-color: var(--gray);
+            border-radius: var(--round);
+            height: 400px; /* 배너 높이 임의 지정 */
+            margin-bottom: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: var(--border);
+            color: var(--sub-text);
+            font-size: 1.2rem;
+        }
+
+        /* 1단: 포스터 & 칼럼 링크 */
+        .row-2 { display: flex; gap: 40px; margin-bottom: 100px; }
+        .poster-col {
+            flex: 1; border: var(--border); border-radius: var(--round);
+            background-color: var(--gray);
+            aspect-ratio: 1 / 1.414;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .poster-col img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+        
+        .column-link-col {
+            flex: 1; border-radius: var(--round);
+            padding: 50px; display: flex; flex-direction: column; justify-content: center;
+            background-color: var(--white); transition: all 0.3s;
+            text-decoration: none; color: var(--black); box-shadow: var(--shadow);
+        }
+        .column-link-col:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .column-link-col .we-text { color: var(--mint); font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; }
+        /* 글자 두께 줄임 (500) */
+        .column-link-col h2 { font-size: 1.6rem; font-weight: 500; margin-bottom: 25px; line-height: 1.4; word-break: keep-all; }
+        .column-link-col .cta-text { color: var(--mint); font-weight: 700; }
+
+        /* 각 단원 제목 스타일 (소제목 꾸미기 적용) */
+        .section-title-wrap { margin-bottom: 40px; }
+        .section-title { 
+            position: relative;
+            display: inline-block; /* 텍스트 길이에 맞게 배경이 깔리도록 */
+            font-size: 2rem; 
+            font-weight: 800; 
+            line-height: 1.2; 
+            word-break: keep-all; 
+            z-index: 1;
+        }
+        /* 꾸미기 1: 타이틀 좌측에 작은 민트색 점(포인트) 추가 */
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: var(--mint);
+            border-radius: 50%;
+        }
+        /* 꾸미기 2: 텍스트 아래에 반투명 형광펜 효과 추가 */
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            height: 14px;
+            background-color: rgba(0, 164, 149, 0.15); /* 민트색 반투명 */
+            z-index: -1;
+        }
+
+        /* 슬라이더 영역 */
+        .slider-section { margin-bottom: 100px; }
+        .slider-wrapper {
+            position: relative; display: flex; align-items: center;
+            border-top: var(--border); padding-top: 40px;
+        }
+        .slider-track {
+            display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth;
+            padding-bottom: 20px; flex: 1;
+        }
+        .slider-track::-webkit-scrollbar { height: 6px; }
+        .slider-track::-webkit-scrollbar-track { background: var(--gray); border-radius: 3px; }
+        .slider-track::-webkit-scrollbar-thumb { background: var(--mint); border-radius: 3px; }
+
+        /* 가로길이를 다 채우도록 크기 대폭 확장 */
+        .link-card {
+            flex: 0 0 80%; /* 화면 넓이의 80% 차지 */
+            max-width: 900px;
+            min-height: 250px; /* 높이도 비례해서 키움 */
+            border: var(--border); border-radius: var(--round);
+            padding: 40px; text-decoration: none; color: var(--black);
+            background-color: var(--white); display: flex; flex-direction: column; justify-content: space-between;
+            box-shadow: var(--shadow); transition: all 0.2s;
+        }
+        .link-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+        .link-card h4 { font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; word-break: keep-all; }
+        .link-card .link-url { color: var(--sub-text); font-size: 1rem; word-break: break-all; margin-bottom: 20px; }
+        .link-card .card-cta { color: var(--mint); font-weight: 700; font-size: 1rem; text-align: right; }
+
+        /* 슬라이드 화살표 버튼 */
+        .arrow-btn {
+            background-color: var(--white); color: var(--mint);
+            border: var(--border); border-radius: 50%; width: 50px; height: 50px;
+            cursor: pointer; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: 0.2s; z-index: 10;
+        }
+        .arrow-btn:hover { background-color: var(--mint); color: var(--white); }
+        .prev-btn { position: absolute; left: -25px; top: calc(50% - 25px); }
+        .next-btn { position: absolute; right: -25px; top: calc(50% - 25px); }
+
+        /* 마지막 원리 알아보기 섹션 (제목만 남김) */
+        .principle-section {
+            background-color: var(--white); border: var(--border); border-radius: var(--round); padding: 60px; margin-bottom: 100px; text-align: center;
+            cursor: pointer; text-decoration: none; color: var(--black); transition: 0.3s; display: block;
+        }
+        .principle-section:hover { background-color: var(--gray); box-shadow: var(--shadow); }
+        .principle-section h3 { font-size: 2rem; font-weight: 800; margin: 0; }
+
+        @media (max-width: 768px) {
+            .row-2 { flex-direction: column; }
+            .container { padding: 40px 20px; }
+            header { padding: 0 20px; }
+            header nav ul { display: none; }
+            .link-card { flex: 0 0 90%; padding: 30px; }
+            .section-title::before { left: 0; top: -15px; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="#" class="logo">알고리즘 바로알고</a>
+    <nav>
+        <ul>
+            <li><a href="#column">캠페인 소개</a></li>
+            <li><a href="#bias">정보 편향성 체크</a></li>
+            <li><a href="#media">미디어 실태</a></li>
+            <li><a href="#filterbubble">필터버블 뉴스</a></li>
+            <li><a href="#principle">원리 알아보기</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <section class="main-banner">
+        추후 메인 이미지가 들어갈 영역입니다.
+    </section>
+
+    <section class="row-2" id="column">
+        <div class="poster-col">
+            <img src="" alt="캠페인 포스터 (A4 규격)">
+            <span style="color: #888; position: absolute;">포스터 이미지 첨부 영역</span>
+        </div>
+        <a href="column.html" class="column-link-col">
+            <span class="we-text">캠페인 칼럼</span>
+            <h2>알고리즘을 제대로 이해하는 사용자는, 그렇지 않은 사용자보다 자신의 정보 환경을 더 능동적으로 바라볼 수 있다. 그리고 그 차이는 앞으로의 디지털 사회에서 점점 더 중요해질 것이다.</h2>
+            <p class="cta-text">칼럼 전문 읽기 →</p>
+        </a>
+    </section>
+
+    <section class="slider-section" id="bias">
+        <div class="section-title-wrap">
+            <h3 class="section-title">[알고리즘 바로알고] 뉴스의 정보 편향도를 체크할 수 있다고?</h3>
+        </div>
+        <div class="slider-wrapper">
+            <button class="arrow-btn prev-btn">◀</button>
+            <div class="slider-track">
+                <a href="https://www.bigkinds.or.kr" target="_blank" class="link-card">
+                    <h4>BigKinds</h4>
+                    <p class="link-url">https://www.bigkinds.or.kr</p>
+                    <p class="card-cta">이동하기 →</p>
+                </a>
+                <a href="https://ground.news" target="_blank" class="link-card">
+                    <h4>Ground News</h4>
+                    <p class="link-url">https://ground.news</p>
+                    <p class="card-cta">이동하기 →</p>
+                </a>
+                <a href="https://www.allsides.com/media-bias/media-bias-chart" target="_blank" class="link-card">
+                    <h4>AllSides Media Bias Chart</h4>
+                    <p class="link-url">https://www.allsides.com/media-bias/media-bias-chart</p>
+                    <p class="card-cta">이동하기 →</p>
+                </a>
+                <a href="https://mediabiasfactcheck.com" target="_blank" class="link-card">
+                    <h4>Media Bias/Fact Check</h4>
+                    <p class="link-url">https://mediabiasfactcheck.com</p>
+                    <p class="card-cta">이동하기 →</p>
+                </a>
+                <a href="https://adfontesmedia.com" target="_blank" class="link-card">
+                    <h4>Ad Fontes Media</h4>
+                    <p class="link-url">https://adfontesmedia.com</p>
+                    <p class="card-cta">이동하기 →</p>
+                </a>
+            </div>
+            <button class="arrow-btn next-btn">▶</button>
+        </div>
+    </section>
+
+    <section class="slider-section" id="media">
+        <div class="section-title-wrap">
+            <h3 class="section-title">[알고리즘 바로알고] 대한민국의 미디어 실태를 알고 싶다면?</h3>
+        </div>
+        <div class="slider-wrapper">
+            <button class="arrow-btn prev-btn">◀</button>
+            <div class="slider-track">
+                <a href="https://www.kpf.or.kr/front/research/consumerDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600224&link_g_topmenu_id=676f2f0f377b4b19840685a46f69a233&link_g_submenu_id=f193a96c92284493b56f35b5f0eb15e3&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <h4>언론수용자 조사 자료 1</h4>
+                    <p class="card-cta">조사 결과 보기 →</p>
+                </a>
+                <a href="https://www.kpf.or.kr/front/research/consumerDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600223&link_g_topmenu_id=676f2f0f377b4b19840685a46f69a233&link_g_submenu_id=f193a96c92284493b56f35b5f0eb15e3&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <h4>언론수용자 조사 자료 2</h4>
+                    <p class="card-cta">조사 결과 보기 →</p>
+                </a>
+                <a href="https://www.kpf.or.kr/front/research/consumerDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=598992&link_g_topmenu_id=676f2f0f377b4b19840685a46f69a233&link_g_submenu_id=f193a96c92284493b56f35b5f0eb15e3&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <h4>언론수용자 조사 자료 3</h4>
+                    <p class="card-cta">조사 결과 보기 →</p>
+                </a>
+                <a href="https://www.kpf.or.kr/front/research/selfDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600334&link_g_topmenu_id=9dade495161e4a598d44afd169b5e271&link_g_submenu_id=16b7ff86f5b44d94bae6b83d36283511&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <h4>미디어 연구 보고서 1</h4>
+                    <p class="card-cta">보고서 읽기 →</p>
+                </a>
+                <a href="https://www.kpf.or.kr/front/research/selfDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600276&link_g_topmenu_id=9dade495161e4a598d44afd169b5e271&link_g_submenu_id=16b7ff86f5b44d94bae6b83d36283511&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <h4>미디어 연구 보고서 2</h4>
+                    <p class="card-cta">보고서 읽기 →</p>
+                </a>
+                <a href="https://www.kpf.or.kr/front/research/selfDetail.do?miv_pageNo=2&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600080&link_g_topmenu_id=9dade495161e4a598d44afd169b5e271&link_g_submenu_id=16b7ff86f5b44d94bae6b83d36283511&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <h4>미디어 연구 보고서 3</h4>
+                    <p class="card-cta">보고서 읽기 →</p>
+                </a>
+            </div>
+            <button class="arrow-btn next-btn">▶</button>
+        </div>
+    </section>
+
+    <section class="slider-section" id="filterbubble">
+        <div class="section-title-wrap">
+            <h3 class="section-title">필터버블이 무엇이길래? 최신 뉴스 모음</h3>
+        </div>
+        <div class="slider-wrapper">
+            <button class="arrow-btn prev-btn">◀</button>
+            <div class="slider-track">
+                <a href="https://www.yna.co.kr/view/AKR20250925105900518" target="_blank" class="link-card">
+                    <h4>연합뉴스 기사</h4>
+                    <p class="card-cta">기사 읽기 →</p>
+                </a>
+                <a href="https://www.newsspirit.kr/news/articleView.html?idxno=30054" target="_blank" class="link-card">
+                    <h4>뉴스스피릿 기사</h4>
+                    <p class="card-cta">기사 읽기 →</p>
+                </a>
+                <a href="https://www.dentalnews.or.kr/news/article.html?no=46315" target="_blank" class="link-card">
+                    <h4>덴탈뉴스 기사</h4>
+                    <p class="card-cta">기사 읽기 →</p>
+                </a>
+                <a href="https://www.dentalarirang.com/news/articleView.html?idxno=47471" target="_blank" class="link-card">
+                    <h4>덴탈아리랑 기사</h4>
+                    <p class="card-cta">기사 읽기 →</p>
+                </a>
+                <a href="https://www.edaily.co.kr/News/Read?newsId=01725286645315752&mediaCodeNo=257" target="_blank" class="link-card">
+                    <h4>이데일리 기사</h4>
+                    <p class="card-cta">기사 읽기 →</p>
+                </a>
+                <a href="https://brunch.co.kr/@jfrences/90" target="_blank" class="link-card">
+                    <h4>브런치 칼럼</h4>
+                    <p class="card-cta">칼럼 읽기 →</p>
+                </a>
+                <a href="https://www.dginclusion.com/news/articleView.html?idxno=1329" target="_blank" class="link-card">
+                    <h4>디지털포용 기사</h4>
+                    <p class="card-cta">기사 읽기 →</p>
+                </a>
+                <a href="https://www.yna.co.kr/view/AKR20250725162100017" target="_blank" class="link-card">
+                    <h4>연합뉴스 기사 2</h4>
+                    <p class="card-cta">기사 읽기 →</p>
+                </a>
+            </div>
+            <button class="arrow-btn next-btn">▶</button>
+        </div>
+    </section>
+
+    <section class="slider-section">
+        <div class="section-title-wrap">
+            <h3 class="section-title">필터버블이 무엇이길래? DBpia 논문 모음</h3>
+        </div>
+        <div class="slider-wrapper">
+            <button class="arrow-btn prev-btn">◀</button>
+            <div class="slider-track">
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12729339" target="_blank" class="link-card">
+                    <h4>DBpia 논문 1</h4>
+                    <p class="card-cta">논문 보기 →</p>
+                </a>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12131761" target="_blank" class="link-card">
+                    <h4>DBpia 논문 2</h4>
+                    <p class="card-cta">논문 보기 →</p>
+                </a>
+                <a href="https://www.dbpia.co.kr/journal/detail?nodeId=T16980308" target="_blank" class="link-card">
+                    <h4>DBpia 논문 3</h4>
+                    <p class="card-cta">논문 보기 →</p>
+                </a>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11781585" target="_blank" class="link-card">
+                    <h4>DBpia 논문 4</h4>
+                    <p class="card-cta">논문 보기 →</p>
+                </a>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11170711" target="_blank" class="link-card">
+                    <h4>DBpia 논문 5</h4>
+                    <p class="card-cta">논문 보기 →</p>
+                </a>
+                <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE10507023" target="_blank" class="link-card">
+                    <h4>DBpia 논문 6</h4>
+                    <p class="card-cta">논문 보기 →</p>
+                </a>
+            </div>
+            <button class="arrow-btn next-btn">▶</button>
+        </div>
+    </section>
+
+    <a href="principle.html" class="principle-section" id="principle">
+        <h3>알고리즘의 작동 원리를 알고 싶다면?</h3>
+    </a>
+
+</div>
+
+<script>
+    document.querySelectorAll('.slider-wrapper').forEach(wrapper => {
+        const track = wrapper.querySelector('.slider-track');
+        const prev = wrapper.querySelector('.prev-btn');
+        const next = wrapper.querySelector('.next-btn');
+
+        prev.addEventListener('click', () => {
+            const cardWidth = track.querySelector('.link-card').offsetWidth;
+            const gap = 30; // CSS에 설정된 gap
+            track.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
+        });
+
+        next.addEventListener('click', () => {
+            const cardWidth = track.querySelector('.link-card').offsetWidth;
+            const gap = 30;
+            track.scrollBy({ left: (cardWidth + gap), behavior: 'smooth' });
+        });
+    });
+</script>
+
+</body>
+</html>
