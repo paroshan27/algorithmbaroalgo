@@ -17,7 +17,7 @@
             --border: 1px solid #E5E8EB;
             --shadow: 0 12px 24px rgba(0,0,0,0.06);
             --shadow-hover: 0 20px 40px rgba(0,164,149,0.12);
-            --round: 20px; /* 라운딩을 조금 더 깊게 주어 트렌디하게 변경 */
+            --round: 20px;
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,12 +27,12 @@
             background-color: var(--white);
             color: var(--black);
             line-height: 1.6;
-            letter-spacing: -0.02em; /* 자간을 살짝 좁혀 세련된 타이포그래피 연출 */
+            letter-spacing: -0.02em;
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
 
-        /* 🌟 글래스모피즘 헤더 (반투명 + 블러) */
+        /* 글래스모피즘 헤더 (v2 유지) */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: 80px;
             background-color: rgba(255, 255, 255, 0.85); 
@@ -41,12 +41,13 @@
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 60px; z-index: 1000;
         }
-        header .logo { font-size: 1.5rem; font-weight: 800; color: var(--black); text-decoration: none; letter-spacing: -1px; }
+        /* ✅ 로고 민트색으로 변경 (v1 스타일) */
+        header .logo { font-size: 1.5rem; font-weight: 800; color: var(--mint); text-decoration: none; letter-spacing: -1px; }
         header nav ul { display: flex; gap: 35px; list-style: none; }
         header nav a { text-decoration: none; color: var(--gray-dark); font-weight: 600; font-size: 1rem; transition: 0.2s; }
         header nav a:hover { color: var(--mint); }
 
-        /* 최상단 배너 (은은한 그라데이션 패턴 추가) */
+        /* 최상단 배너 (v2 유지) */
         .main-banner {
             margin-top: 100px;
             background: linear-gradient(135deg, #F4F6F8 0%, #E9ECEF 100%);
@@ -63,7 +64,7 @@
         }
         .main-banner span { z-index: 1; }
 
-        /* 1단: 포스터 & 칼럼 링크 */
+        /* 1단: 포스터 & 칼럼 링크 (v2 유지) */
         .row-2 { display: flex; gap: 40px; margin-bottom: 120px; }
         .poster-col {
             flex: 1; border: var(--border); border-radius: var(--round);
@@ -90,11 +91,13 @@
         .column-link-col h2 { font-size: 1.7rem; font-weight: 500; margin-bottom: 30px; line-height: 1.5; word-break: keep-all; text-align: justify; }
         .column-link-col .cta-text { color: var(--mint); font-weight: 700; font-size: 1.1rem; }
 
-        /* 🌟 세련된 뱃지 및 소제목 꾸미기 */
+        /* ✅ 소제목 스타일: v2의 배지 유지 + v1의 민트 포인트 장식 복원 */
         .section-title-wrap { margin-bottom: 40px; }
+
+        /* ✅ 배지: 민트색 배경, 흰 텍스트, block으로 줄바꿈 */
         .section-badge {
-            display: inline-block;
-            background-color: var(--black);
+            display: block;
+            background-color: var(--mint);
             color: var(--white);
             font-size: 0.85rem;
             font-weight: 700;
@@ -102,29 +105,47 @@
             border-radius: 20px;
             margin-bottom: 12px;
             letter-spacing: 0;
+            width: fit-content;
         }
+
+        /* 소제목 스타일: 민트 밑줄 하이라이트만 유지 (점 없음) */
         .section-title { 
+            position: relative;
+            display: inline-block;
             font-size: 2.2rem; 
             font-weight: 800; 
             line-height: 1.3; 
-            word-break: keep-all; 
+            word-break: keep-all;
+            z-index: 1;
         }
-        .youtube-slider-wrapper .section-title-wrap { text-align: center; } /* 유튜브 섹션 중앙 정렬 */
+        /* 아래 민트 반투명 하이라이트 밑줄 */
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0px; left: 0;
+            width: 100%; height: 14px;
+            background-color: rgba(0, 164, 149, 0.15);
+            z-index: -1;
+        }
 
-        /* 슬라이더 영역 */
+        /* 유튜브 섹션 소제목 중앙 정렬 */
+        .youtube-section-title-wrap { text-align: center; }
+        .youtube-section-title-wrap .section-badge { margin: 0 auto 12px; }
+
+        /* 슬라이더 영역 (v2 유지) */
         .slider-section { margin-bottom: 120px; }
         .slider-wrapper {
             position: relative; display: flex; align-items: center;
         }
         .slider-track {
             display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth;
-            padding-bottom: 30px; flex: 1; padding-top: 10px; /* 그림자가 잘리지 않도록 여백 */
+            padding-bottom: 30px; flex: 1; padding-top: 10px;
         }
         .slider-track::-webkit-scrollbar { height: 6px; }
         .slider-track::-webkit-scrollbar-track { background: var(--gray); border-radius: 3px; }
         .slider-track::-webkit-scrollbar-thumb { background: #D1D6DB; border-radius: 3px; }
 
-        /* 🌟 일반 카드 디자인 (이미지 줌 효과 & 버튼 추가) */
+        /* 일반 카드 디자인 (v2 유지) */
         .link-card {
             flex: 0 0 80%; max-width: 900px;
             border: var(--border); border-radius: var(--round);
@@ -139,9 +160,8 @@
         .card-image {
             width: 100%; height: 350px; 
             background-color: #EFEFEF; border-bottom: var(--border);
-            overflow: hidden; /* 이미지가 둥근 모서리를 넘지 않도록 */
+            overflow: hidden;
         }
-        /* 마우스 오버 시 이미지 부드럽게 확대 */
         .card-image img {
             width: 100%; height: 100%; object-fit: cover; 
             transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -154,17 +174,15 @@
         .card-content h4 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; word-break: keep-all; line-height: 1.4; }
         .card-content .link-url { color: var(--sub-text); font-size: 1rem; word-break: keep-all; margin-bottom: 30px; }
         
-        /* 텍스트 대신 알약 형태의 예쁜 버튼으로 변경 */
         .card-cta { 
-            align-self: flex-start; /* 왼쪽 정렬 */
+            align-self: flex-start;
             background-color: var(--gray); color: var(--gray-dark);
             padding: 10px 20px; border-radius: 25px;
             font-weight: 700; font-size: 0.95rem; transition: 0.3s;
         }
         .link-card:hover .card-cta { background-color: var(--mint); color: var(--white); }
 
-
-        /* 🎬 유튜브 전용 맞춤 카드 디자인 */
+        /* 유튜브 전용 카드 (v2 유지) */
         .youtube-slider-wrapper {
             max-width: 700px; margin: 0 auto; 
         }
@@ -184,7 +202,7 @@
             object-fit: contain; 
         }
 
-        /* 슬라이드 화살표 버튼 (디자인 개선) */
+        /* 화살표 버튼 (v2 유지) */
         .arrow-btn {
             background-color: var(--white); color: var(--black);
             border: var(--border); border-radius: 50%; width: 54px; height: 54px;
@@ -195,7 +213,7 @@
         .prev-btn { position: absolute; left: -27px; top: calc(50% - 27px); }
         .next-btn { position: absolute; right: -27px; top: calc(50% - 27px); }
 
-        /* 마지막 단 배너 (그라데이션 강조) */
+        /* 마지막 배너 (v2 유지) */
         .principle-section {
             background: linear-gradient(135deg, #111111 0%, #333333 100%); 
             border-radius: var(--round); padding: 80px 40px; margin-bottom: 100px; text-align: center;
@@ -213,7 +231,7 @@
             .link-card { flex: 0 0 90%; }
             .card-image { height: 200px; }
             .card-content { padding: 30px; }
-            .youtube-slider-wrapper { max-width: 100%; } 
+            .youtube-slider-wrapper { max-width: 100%; }
             .section-title { font-size: 1.6rem; }
         }
     </style>
@@ -253,8 +271,7 @@
     </section>
 
     <section class="slider-section" id="issue">
-        <div class="section-title-wrap youtube-slider-wrapper"> 
-            <span class="section-badge">Video Issue</span>
+        <div class="section-title-wrap youtube-section-title-wrap"> 
             <h3 class="section-title">알고리즘 issue 모아보기</h3>
         </div>
         
@@ -473,7 +490,7 @@
                 <a href="https://www.yna.co.kr/view/AKR20250725162100017" target="_blank" class="link-card">
                     <div class="card-image"><img src="YHnews.jpeg" alt="YHnews.jpeg"></div>
                     <div class="card-content">
-                        <h4> AI 알고리즘, '필터 버블' 만든다…극단화 부작용 경고</h4>
+                        <h4>AI 알고리즘, '필터 버블' 만든다…극단화 부작용 경고</h4>
                         <span class="card-cta">기사 읽기 →</span>
                     </div>
                 </a>
