@@ -8,13 +8,16 @@
     <style>
         :root {
             --mint: #00A495;
+            --mint-light: rgba(0, 164, 149, 0.1);
             --white: #FFFFFF;
-            --black: #1A1A1A;
-            --gray: #F8F9FA;
-            --sub-text: #666666;
-            --border: 1px solid #EAEAEA;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
-            --round: 12px;
+            --black: #111111;
+            --gray-dark: #333333;
+            --gray: #F4F6F8;
+            --sub-text: #777777;
+            --border: 1px solid #E5E8EB;
+            --shadow: 0 12px 24px rgba(0,0,0,0.06);
+            --shadow-hover: 0 20px 40px rgba(0,164,149,0.12);
+            --round: 20px; /* 라운딩을 조금 더 깊게 주어 트렌디하게 변경 */
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,37 +27,36 @@
             background-color: var(--white);
             color: var(--black);
             line-height: 1.6;
+            letter-spacing: -0.02em; /* 자간을 살짝 좁혀 세련된 타이포그래피 연출 */
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
 
-        /* 고정 헤더 */
+        /* 🌟 글래스모피즘 헤더 (반투명 + 블러) */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-            background-color: var(--white); border-bottom: var(--border);
+            background-color: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: var(--border);
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 60px; z-index: 1000;
         }
-        header .logo { font-size: 1.5rem; font-weight: 800; color: var(--black); text-decoration: none; }
-        header nav ul { display: flex; gap: 30px; list-style: none; }
-        header nav a { text-decoration: none; color: var(--black); font-weight: 500; font-size: 1rem; transition: 0.2s; }
+        header .logo { font-size: 1.5rem; font-weight: 800; color: var(--black); text-decoration: none; letter-spacing: -1px; }
+        header nav ul { display: flex; gap: 35px; list-style: none; }
+        header nav a { text-decoration: none; color: var(--gray-dark); font-weight: 600; font-size: 1rem; transition: 0.2s; }
         header nav a:hover { color: var(--mint); }
 
-        /* 최상단 배너 */
+        /* 최상단 배너 (은은한 그라데이션 패턴 추가) */
         .main-banner {
-            margin-top: 140px;
-            background-color: var(--gray);
+            margin-top: 100px;
+            background: linear-gradient(135deg, #F4F6F8 0%, #E9ECEF 100%);
             border-radius: var(--round);
-            height: 400px; 
-            margin-bottom: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 450px; 
+            margin-bottom: 100px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--sub-text); font-size: 1.2rem; font-weight: 500;
+            position: relative; overflow: hidden;
             border: var(--border);
-            color: var(--sub-text);
-            font-size: 1.2rem;
-            position: relative;
-            overflow: hidden;
         }
         .main-banner img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
@@ -62,142 +64,146 @@
         .main-banner span { z-index: 1; }
 
         /* 1단: 포스터 & 칼럼 링크 */
-        .row-2 { display: flex; gap: 40px; margin-bottom: 100px; }
+        .row-2 { display: flex; gap: 40px; margin-bottom: 120px; }
         .poster-col {
             flex: 1; border: var(--border); border-radius: var(--round);
-            background-color: var(--gray);
-            aspect-ratio: 1 / 1.414;
+            background-color: var(--gray); aspect-ratio: 1 / 1.414;
             display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
+            position: relative; overflow: hidden; box-shadow: var(--shadow);
         }
         .poster-col img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
         
         .column-link-col {
             flex: 1; border-radius: var(--round);
-            padding: 50px; display: flex; flex-direction: column; justify-content: center;
-            background-color: var(--white); transition: all 0.3s;
+            padding: 60px; display: flex; flex-direction: column; justify-content: center;
+            background-color: var(--white); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             text-decoration: none; color: var(--black); box-shadow: var(--shadow);
-        }
-        .column-link-col:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-        .column-link-col .we-text { color: var(--mint); font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; }
-        .column-link-col h2 { font-size: 1.6rem; font-weight: 500; margin-bottom: 25px; line-height: 1.4; word-break: keep-all; text-align: justify; }
-        .column-link-col .cta-text { color: var(--mint); font-weight: 700; }
-
-        /* 소제목 꾸미기 */
-        .section-title-wrap { margin-bottom: 40px; }
-        .section-title { 
+            border: var(--border);
             position: relative;
-            display: inline-block; 
-            font-size: 2rem; 
-            font-weight: 800; 
-            line-height: 1.2; 
-            word-break: keep-all; 
-            z-index: 1;
         }
-        .section-title::before {
-            content: ''; position: absolute; left: -20px; top: 50%; transform: translateY(-50%);
-            width: 8px; height: 8px; background-color: var(--mint); border-radius: 50%;
+        .column-link-col:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: var(--mint); }
+        .column-link-col .we-text { 
+            display: inline-block; background-color: var(--mint-light); color: var(--mint); 
+            font-weight: 800; font-size: 0.85rem; padding: 6px 14px; border-radius: 20px; 
+            margin-bottom: 20px; text-transform: uppercase; align-self: flex-start;
         }
-        .section-title::after {
-            content: ''; position: absolute; bottom: 0px; left: 0; width: 100%; height: 14px;
-            background-color: rgba(0, 164, 149, 0.15); z-index: -1;
-        }
+        .column-link-col h2 { font-size: 1.7rem; font-weight: 500; margin-bottom: 30px; line-height: 1.5; word-break: keep-all; text-align: justify; }
+        .column-link-col .cta-text { color: var(--mint); font-weight: 700; font-size: 1.1rem; }
 
-        /* 공통 슬라이더 영역 */
-        .slider-section { margin-bottom: 100px; }
+        /* 🌟 세련된 뱃지 및 소제목 꾸미기 */
+        .section-title-wrap { margin-bottom: 40px; }
+        .section-badge {
+            display: inline-block;
+            background-color: var(--black);
+            color: var(--white);
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 0;
+        }
+        .section-title { 
+            font-size: 2.2rem; 
+            font-weight: 800; 
+            line-height: 1.3; 
+            word-break: keep-all; 
+        }
+        .youtube-slider-wrapper .section-title-wrap { text-align: center; } /* 유튜브 섹션 중앙 정렬 */
+
+        /* 슬라이더 영역 */
+        .slider-section { margin-bottom: 120px; }
         .slider-wrapper {
             position: relative; display: flex; align-items: center;
-            border-top: var(--border); padding-top: 40px;
         }
         .slider-track {
             display: flex; gap: 30px; overflow-x: auto; scroll-behavior: smooth;
-            padding-bottom: 20px; flex: 1;
+            padding-bottom: 30px; flex: 1; padding-top: 10px; /* 그림자가 잘리지 않도록 여백 */
         }
         .slider-track::-webkit-scrollbar { height: 6px; }
         .slider-track::-webkit-scrollbar-track { background: var(--gray); border-radius: 3px; }
-        .slider-track::-webkit-scrollbar-thumb { background: var(--mint); border-radius: 3px; }
+        .slider-track::-webkit-scrollbar-thumb { background: #D1D6DB; border-radius: 3px; }
 
-        /* 일반 카드 디자인 (정보 편향성, 리서치, 뉴스 등) */
+        /* 🌟 일반 카드 디자인 (이미지 줌 효과 & 버튼 추가) */
         .link-card {
-            flex: 0 0 80%; 
-            max-width: 900px;
+            flex: 0 0 80%; max-width: 900px;
             border: var(--border); border-radius: var(--round);
             text-decoration: none; color: var(--black);
             background-color: var(--white); 
             display: flex; flex-direction: column; 
-            box-shadow: var(--shadow); transition: all 0.2s;
+            box-shadow: var(--shadow); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             overflow: hidden; 
         }
-        .link-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .link-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
         
         .card-image {
-            width: 100%;
-            height: 350px; 
-            background-color: #EFEFEF;
-            border-bottom: var(--border);
+            width: 100%; height: 350px; 
+            background-color: #EFEFEF; border-bottom: var(--border);
+            overflow: hidden; /* 이미지가 둥근 모서리를 넘지 않도록 */
         }
+        /* 마우스 오버 시 이미지 부드럽게 확대 */
         .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+        .link-card:hover .card-image img { transform: scale(1.05); }
 
         .card-content {
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            padding: 40px; display: flex; flex-direction: column; justify-content: space-between; flex: 1;
         }
-        .card-content h4 { font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; word-break: keep-all; }
-        .card-content .link-url { color: var(--sub-text); font-size: 1rem; word-break: keep-all; margin-bottom: 20px; }
-        .card-content .card-cta { color: var(--mint); font-weight: 700; font-size: 1rem; text-align: right; }
+        .card-content h4 { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; word-break: keep-all; line-height: 1.4; }
+        .card-content .link-url { color: var(--sub-text); font-size: 1rem; word-break: keep-all; margin-bottom: 30px; }
+        
+        /* 텍스트 대신 알약 형태의 예쁜 버튼으로 변경 */
+        .card-cta { 
+            align-self: flex-start; /* 왼쪽 정렬 */
+            background-color: var(--gray); color: var(--gray-dark);
+            padding: 10px 20px; border-radius: 25px;
+            font-weight: 700; font-size: 0.95rem; transition: 0.3s;
+        }
+        .link-card:hover .card-cta { background-color: var(--mint); color: var(--white); }
 
 
-        /* 🎬 유튜브 전용 슬라이더 및 맞춤 카드 디자인 (수정됨) */
+        /* 🎬 유튜브 전용 맞춤 카드 디자인 */
         .youtube-slider-wrapper {
-            max-width: 650px; /* 전체 가로화면을 채우지 않도록 박스 축소 */
-            margin: 0 auto; /* 화면 정중앙에 배치 */
-            border-top: none; /* 선 제거로 깔끔하게 */
+            max-width: 700px; margin: 0 auto; 
         }
         .youtube-slider-wrapper .slider-track {
-            scroll-snap-type: x mandatory; /* 스크롤 시 카드가 중간에 안 멈추고 자석처럼 딱 맞춰짐 */
+            scroll-snap-type: x mandatory; 
         }
         .youtube-card {
-            flex: 0 0 100%; /* 부모 넓이(650px)를 100% 채워서 한 번에 무조건 하나만 보이게 함 */
-            max-width: 100%;
-            scroll-snap-align: center; /* 스냅 고정점 설정 */
+            flex: 0 0 100%; max-width: 100%;
+            scroll-snap-align: center; 
         }
         .youtube-card .card-image {
-            height: auto; 
-            aspect-ratio: 16 / 9; /* 유튜브 썸네일 전용 16:9 규격 */
-            background-color: #111111; /* 빈 공간은 검은색 레터박스로 채움 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: auto; aspect-ratio: 16 / 9; 
+            background-color: #000000; 
+            display: flex; align-items: center; justify-content: center;
         }
         .youtube-card .card-image img {
-            object-fit: contain; /* 이미지가 잘리지 않고 전체가 쏙 들어가게 설정 */
+            object-fit: contain; 
         }
 
-
-        /* 슬라이드 화살표 버튼 */
+        /* 슬라이드 화살표 버튼 (디자인 개선) */
         .arrow-btn {
-            background-color: var(--white); color: var(--mint);
-            border: var(--border); border-radius: 50%; width: 50px; height: 50px;
+            background-color: var(--white); color: var(--black);
+            border: var(--border); border-radius: 50%; width: 54px; height: 54px;
             cursor: pointer; font-weight: bold; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; transition: 0.2s; z-index: 10;
+            flex-shrink: 0; transition: 0.2s; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-        .arrow-btn:hover { background-color: var(--mint); color: var(--white); }
-        .prev-btn { position: absolute; left: -25px; top: calc(50% - 25px); }
-        .next-btn { position: absolute; right: -25px; top: calc(50% - 25px); }
+        .arrow-btn:hover { background-color: var(--mint); color: var(--white); border-color: var(--mint); }
+        .prev-btn { position: absolute; left: -27px; top: calc(50% - 27px); }
+        .next-btn { position: absolute; right: -27px; top: calc(50% - 27px); }
 
-        /* 마지막 단 배너 */
+        /* 마지막 단 배너 (그라데이션 강조) */
         .principle-section {
-            background-color: var(--white); border: var(--border); border-radius: var(--round); padding: 60px; margin-bottom: 100px; text-align: center;
-            cursor: pointer; text-decoration: none; color: var(--black); transition: 0.3s; display: block;
+            background: linear-gradient(135deg, #111111 0%, #333333 100%); 
+            border-radius: var(--round); padding: 80px 40px; margin-bottom: 100px; text-align: center;
+            cursor: pointer; text-decoration: none; color: var(--white); transition: 0.4s; display: block;
+            box-shadow: var(--shadow);
         }
-        .principle-section:hover { background-color: var(--gray); box-shadow: var(--shadow); }
-        .principle-section h3 { font-size: 2rem; font-weight: 800; margin: 0; }
+        .principle-section:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .principle-section h3 { font-size: 2.2rem; font-weight: 800; margin: 0; color: var(--mint); }
 
         @media (max-width: 768px) {
             .row-2 { flex-direction: column; }
@@ -207,8 +213,8 @@
             .link-card { flex: 0 0 90%; }
             .card-image { height: 200px; }
             .card-content { padding: 30px; }
-            .section-title::before { left: 0; top: -15px; transform: none; }
-            .youtube-slider-wrapper { max-width: 100%; } /* 모바일에서는 꽉 차게 */
+            .youtube-slider-wrapper { max-width: 100%; } 
+            .section-title { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -240,14 +246,16 @@
             <span style="color: #888; position: absolute;">포스터 이미지 첨부 영역</span>
         </div>
         <a href="column.html" class="column-link-col">
-            <span class="we-text">캠페인 칼럼</span>
+            <span class="we-text">Campaign Column</span>
             <h2>알고리즘을 제대로 이해하는 사용자는, 그렇지 않은 사용자보다 자신의 정보 환경을 더 능동적으로 바라볼 수 있다. 그리고 그 차이는 앞으로의 디지털 사회에서 점점 더 중요해질 것이다.</h2>
             <p class="cta-text">칼럼 전문 읽기 →</p>
         </a>
     </section>
 
     <section class="slider-section" id="issue">
-        <div class="section-title-wrap" style="text-align: center;"> <h3 class="section-title">알고리즘 issue 모아보기</h3>
+        <div class="section-title-wrap youtube-slider-wrapper"> 
+            <span class="section-badge">Video Issue</span>
+            <h3 class="section-title">알고리즘 issue 모아보기</h3>
         </div>
         
         <div class="slider-wrapper youtube-slider-wrapper">
@@ -259,7 +267,7 @@
                     <div class="card-content">
                         <h4>우리의 혐오와 편향을 그대로 답습해 만들어진 인공지능... #알쓸범잡</h4>
                         <p class="link-url">tvN Joy</p>
-                        <p class="card-cta">영상 보기 →</p>
+                        <span class="card-cta">영상 보기 →</span>
                     </div>
                 </a>
 
@@ -268,7 +276,7 @@
                     <div class="card-content">
                         <h4>빠니보틀이 1시간짜리 긴 영상을 올리는 이유</h4>
                         <p class="link-url">잡식맨 JOBXICMAN</p>
-                        <p class="card-cta">영상 보기 →</p>
+                        <span class="card-cta">영상 보기 →</span>
                     </div>
                 </a>
 
@@ -277,7 +285,7 @@
                     <div class="card-content">
                         <h4>AI 편향, 알고리즘의 함정에서 아이를 지키는 법</h4>
                         <p class="link-url">헬로tv뉴스</p>
-                        <p class="card-cta">영상 보기 →</p>
+                        <span class="card-cta">영상 보기 →</span>
                     </div>
                 </a>
 
@@ -286,7 +294,7 @@
                     <div class="card-content">
                         <h4>알고리즘대로 보기만 하면 세상과 단절된다고?</h4>
                         <p class="link-url">방송미디어통신위원회</p>
-                        <p class="card-cta">영상 보기 →</p>
+                        <span class="card-cta">영상 보기 →</span>
                     </div>
                 </a>
 
@@ -295,7 +303,7 @@
                     <div class="card-content">
                         <h4>당신의 알고리즘에 이 영상이 뜬 이유</h4>
                         <p class="link-url">1분만</p>
-                        <p class="card-cta">영상 보기 →</p>
+                        <span class="card-cta">영상 보기 →</span>
                     </div>
                 </a>
 
@@ -306,7 +314,8 @@
 
     <section class="slider-section" id="bias">
         <div class="section-title-wrap">
-            <h3 class="section-title">[알고리즘 바로알고] 뉴스의 정보 편향도를 체크할 수 있다고?</h3>
+            <span class="section-badge">Check Tools</span>
+            <h3 class="section-title">뉴스의 정보 편향도를 체크할 수 있다고?</h3>
         </div>
         <div class="slider-wrapper">
             <button class="arrow-btn prev-btn">◀</button>
@@ -317,7 +326,7 @@
                     <div class="card-content">
                         <h4>BigKinds</h4>
                         <p class="link-url">한국언론진흥재단이 제공하는 국내 최대 뉴스 빅데이터 분석 시스템</p>
-                        <p class="card-cta">이동하기 →</p>
+                        <span class="card-cta">이동하기 →</span>
                     </div>
                 </a>
 
@@ -326,7 +335,7 @@
                     <div class="card-content">
                         <h4>Ground News</h4>
                         <p class="link-url">같은 사건을 다룬 전 세계 기사들의 좌·우 편향도 비교 플랫폼</p>
-                        <p class="card-cta">이동하기 →</p>
+                        <span class="card-cta">이동하기 →</span>
                     </div>
                 </a>
 
@@ -335,7 +344,7 @@
                     <div class="card-content">
                         <h4>AllSides Media Bias Chart</h4>
                         <p class="link-url">미국 주요 언론사의 정치 편향성을 5단계로 분류하는 차트</p>
-                        <p class="card-cta">이동하기 →</p>
+                        <span class="card-cta">이동하기 →</span>
                     </div>
                 </a>
 
@@ -344,7 +353,7 @@
                     <div class="card-content">
                         <h4>Media Bias/Fact Check</h4>
                         <p class="link-url">미디어 소스의 정치적 편향성과 팩트체크 신뢰도를 평가하는 사이트</p>
-                        <p class="card-cta">이동하기 →</p>
+                        <span class="card-cta">이동하기 →</span>
                     </div>
                 </a>
 
@@ -353,7 +362,7 @@
                     <div class="card-content">
                         <h4>Ad Fontes Media</h4>
                         <p class="link-url">뉴스 신뢰성과 정치 편향성의 2차원 맵핑 인터랙티브 차트</p>
-                        <p class="card-cta">이동하기 →</p>
+                        <span class="card-cta">이동하기 →</span>
                     </div>
                 </a>
 
@@ -364,7 +373,8 @@
 
     <section class="slider-section" id="media">
         <div class="section-title-wrap">
-            <h3 class="section-title">[알고리즘 바로알고] 대한민국의 미디어 실태를 알고 싶다면?</h3>
+            <span class="section-badge">Research</span>
+            <h3 class="section-title">대한민국의 미디어 실태를 알고 싶다면?</h3>
         </div>
         <div class="slider-wrapper">
             <button class="arrow-btn prev-btn">◀</button>
@@ -375,7 +385,7 @@
                     <div class="card-content">
                         <h4>2025 언론수용자 조사</h4>
                         <p class="link-url">한국언론진흥재단: 미디어 수용자의 뉴스 소비 행태 및 인식 조사</p>
-                        <p class="card-cta">조사 결과 보기 →</p>
+                        <span class="card-cta">조사 결과 보기 →</span>
                     </div>
                 </a>
                 
@@ -384,7 +394,7 @@
                     <div class="card-content">
                         <h4>2025 10대 청소년 미디어 이용 조사</h4>
                         <p class="link-url">소셜 미디어 및 플랫폼 기반의 매체별 이용 현황 분석</p>
-                        <p class="card-cta">조사 결과 보기 →</p>
+                        <span class="card-cta">조사 결과 보기 →</span>
                     </div>
                 </a>
 
@@ -393,7 +403,7 @@
                     <div class="card-content">
                         <h4>2024 뉴스 이용과 온라인 동영상 플랫폼 조사</h4>
                         <p class="link-url">디지털 환경에서의 추천 서비스에 대한 수용자 신뢰도 통계</p>
-                        <p class="card-cta">조사 결과 보기 →</p>
+                        <span class="card-cta">조사 결과 보기 →</span>
                     </div>
                 </a>
 
@@ -402,7 +412,7 @@
                     <div class="card-content">
                         <h4>한국의 미디어 지형 2025</h4>
                         <p class="link-url">알고리즘 추천 환경에서의 디지털 리터러시 역량 강화 과제</p>
-                        <p class="card-cta">보고서 읽기 →</p>
+                        <span class="card-cta">보고서 읽기 →</span>
                     </div>
                 </a>
 
@@ -411,7 +421,7 @@
                     <div class="card-content">
                         <h4>미디어 연구 보고서 2</h4>
                         <p class="link-url">미디어 플랫폼 알고리즘 투명성 제고 및 수용자 보호 방안</p>
-                        <p class="card-cta">보고서 읽기 →</p>
+                        <span class="card-cta">보고서 읽기 →</span>
                     </div>
                 </a>
 
@@ -420,7 +430,7 @@
                     <div class="card-content">
                         <h4>디지털 뉴스 리포트 2025 한국</h4>
                         <p class="link-url">데이터 기반 맞춤형 정보 제공이 여론 다양성에 미치는 영향</p>
-                        <p class="card-cta">보고서 읽기 →</p>
+                        <span class="card-cta">보고서 읽기 →</span>
                     </div>
                 </a>
 
@@ -431,6 +441,7 @@
 
     <section class="slider-section" id="filterbubble">
         <div class="section-title-wrap">
+            <span class="section-badge">News</span>
             <h3 class="section-title">필터버블이 무엇이길래? 최신 뉴스 모음</h3>
         </div>
         <div class="slider-wrapper">
@@ -441,21 +452,21 @@
                     <div class="card-image"><img src="YHnews.jpeg" alt="YHnews.jpeg"></div>
                     <div class="card-content">
                         <h4>SNS 알고리즘이 극단화 야기?…'필터 버블' 실제 존재하나</h4>
-                        <p class="card-cta">기사 읽기 →</p>
+                        <span class="card-cta">기사 읽기 →</span>
                     </div>
                 </a>
                 <a href="https://www.journalist.or.kr/news/article.html?no=56994" target="_blank" class="link-card">
                     <div class="card-image"><img src="KPF.png" alt="KPF.png"></div>
                     <div class="card-content">
                         <h4>숏폼 이용자 87.1% "영상 중독성 있다"</h4>
-                        <p class="card-cta">기사 읽기 →</p>
+                        <span class="card-cta">기사 읽기 →</span>
                     </div>
                 </a>
                 <a href="https://www.edaily.co.kr/News/Read?newsId=01725286645315752&mediaCodeNo=257" target="_blank" class="link-card">
                     <div class="card-image"><img src="edaily.png" alt="edaily.png"></div>
                     <div class="card-content">
                         <h4>"몇번 보니 가짜뉴스로 도배"…편향된 알고리즘의 포로들</h4>
-                        <p class="card-cta">기사 읽기 →</p>
+                        <span class="card-cta">기사 읽기 →</span>
                     </div>
                 </a>
 
@@ -463,7 +474,7 @@
                     <div class="card-image"><img src="YHnews.jpeg" alt="YHnews.jpeg"></div>
                     <div class="card-content">
                         <h4> AI 알고리즘, '필터 버블' 만든다…극단화 부작용 경고</h4>
-                        <p class="card-cta">기사 읽기 →</p>
+                        <span class="card-cta">기사 읽기 →</span>
                     </div>
                 </a>
 
@@ -474,7 +485,8 @@
 
     <section class="slider-section">
         <div class="section-title-wrap">
-            <h3 class="section-title">필터버블이 무엇이길래? DBpia 논문 모음</h3>
+            <span class="section-badge">Academic Paper</span>
+            <h3 class="section-title">필터버블 관련 DBpia 논문 모음</h3>
         </div>
         <div class="slider-wrapper">
             <button class="arrow-btn prev-btn">◀</button>
@@ -484,7 +496,7 @@
                     <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
                         <h4>미디어 소비 빈도와 콘텐츠 발견 방식 간의 상관관계 연구</h4>
-                        <p class="card-cta">논문 보기 →</p>
+                        <span class="card-cta">논문 보기 →</span>
                     </div>
                 </a>
 
@@ -492,7 +504,7 @@
                     <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
                         <h4>동영상 플랫폼 사용자 행동 패턴 분석 및 다중회귀 모델링 사례</h4>
-                        <p class="card-cta">논문 보기 →</p>
+                        <span class="card-cta">논문 보기 →</span>
                     </div>
                 </a>
 
@@ -500,7 +512,7 @@
                     <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
                         <h4>자동재생 및 추천 알고리즘이 사용자 체류 시간에 미치는 영향</h4>
-                        <p class="card-cta">논문 보기 →</p>
+                        <span class="card-cta">논문 보기 →</span>
                     </div>
                 </a>
 
@@ -508,7 +520,7 @@
                     <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
                         <h4>숏폼 콘텐츠 중심의 디지털 환경에서 나타나는 필터버블 양상</h4>
-                        <p class="card-cta">논문 보기 →</p>
+                        <span class="card-cta">논문 보기 →</span>
                     </div>
                 </a>
 
@@ -516,7 +528,7 @@
                     <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
                         <h4>추천 시스템 정교화가 사용자의 능동적 정보 탐색에 미치는 효과</h4>
-                        <p class="card-cta">논문 보기 →</p>
+                        <span class="card-cta">논문 보기 →</span>
                     </div>
                 </a>
 
@@ -524,7 +536,7 @@
                     <div class="card-image"><img src="DBpia.png" alt="DBpia"></div>
                     <div class="card-content">
                         <h4>디지털 환경의 확증 편향 해소를 위한 알고리즘 투명성 제고 방안</h4>
-                        <p class="card-cta">논문 보기 →</p>
+                        <span class="card-cta">논문 보기 →</span>
                     </div>
                 </a>
 
@@ -545,26 +557,21 @@
         const prev = wrapper.querySelector('.prev-btn');
         const next = wrapper.querySelector('.next-btn');
         
-        // 유튜브 영역인지 확인하는 변수
         const isYoutubeSlider = wrapper.classList.contains('youtube-slider-wrapper');
 
-        // 오른쪽(다음)으로 넘기는 함수
         const scrollNext = () => {
             const firstCard = track.querySelector('.link-card');
             if(!firstCard) return;
             const cardWidth = firstCard.offsetWidth;
-            const gap = 30; // CSS gap 값
+            const gap = 30;
             
-            // 맨 끝에 도달했는지 확인 (약간의 오차를 위해 -10px 여유를 줌)
             if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
-                // 맨 끝이면 처음으로 부드럽게 되돌아감
                 track.scrollTo({ left: 0, behavior: 'smooth' });
             } else {
                 track.scrollBy({ left: (cardWidth + gap), behavior: 'smooth' });
             }
         };
 
-        // 왼쪽(이전)으로 넘기는 함수
         const scrollPrev = () => {
             const firstCard = track.querySelector('.link-card');
             if(!firstCard) return;
@@ -573,11 +580,9 @@
             track.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
         };
 
-        // 수동 버튼 클릭 이벤트 연결
         prev.addEventListener('click', scrollPrev);
         next.addEventListener('click', scrollNext);
 
-        // 유튜브 슬라이더일 때만 5초 자동 넘김 실행
         if (isYoutubeSlider) {
             setInterval(scrollNext, 5000);
         }
