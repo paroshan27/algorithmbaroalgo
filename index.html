@@ -80,7 +80,9 @@
         }
         .column-link-col:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
         .column-link-col .we-text { color: var(--mint); font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; }
-        .column-link-col h2 { font-size: 1.6rem; font-weight: 500; margin-bottom: 25px; line-height: 1.4; word-break: keep-all; }
+        
+        /* h2 양쪽 정렬(justify) 적용 */
+        .column-link-col h2 { font-size: 1.6rem; font-weight: 500; margin-bottom: 25px; line-height: 1.4; word-break: keep-all; text-align: justify; }
         .column-link-col .cta-text { color: var(--mint); font-weight: 700; }
 
         /* 소제목 꾸미기 */
@@ -117,7 +119,7 @@
         .slider-track::-webkit-scrollbar-track { background: var(--gray); border-radius: 3px; }
         .slider-track::-webkit-scrollbar-thumb { background: var(--mint); border-radius: 3px; }
 
-        /* 카드 디자인 전면 수정 (노션 스타일) */
+        /* 카드 디자인 */
         .link-card {
             flex: 0 0 80%; 
             max-width: 900px;
@@ -130,7 +132,6 @@
         }
         .link-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
         
-        /* 카드 상단 이미지 영역 */
         .card-image {
             width: 100%;
             height: 350px; 
@@ -143,7 +144,6 @@
             object-fit: cover; 
         }
         
-        /* 카드 하단 텍스트 영역 */
         .card-content {
             padding: 40px;
             display: flex;
@@ -151,7 +151,6 @@
             justify-content: space-between;
         }
         .card-content h4 { font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; word-break: keep-all; }
-        /* 한글 설명이 예쁘게 줄바꿈 되도록 keep-all 로 수정 완료 */
         .card-content .link-url { color: var(--sub-text); font-size: 1rem; word-break: keep-all; margin-bottom: 20px; }
         .card-content .card-cta { color: var(--mint); font-weight: 700; font-size: 1rem; text-align: right; }
 
@@ -195,6 +194,7 @@
             <li><a href="#column">캠페인 소개</a></li>
             <li><a href="#bias">정보 편향성 체크</a></li>
             <li><a href="#media">미디어 실태</a></li>
+            <li><a href="#issue">이슈 모아보기</a></li>
             <li><a href="#filterbubble">필터버블 뉴스</a></li>
             <li><a href="#principle">원리 알아보기</a></li>
         </ul>
@@ -344,6 +344,64 @@
         </div>
     </section>
 
+    <section class="slider-section" id="issue">
+        <div class="section-title-wrap">
+            <h3 class="section-title">[알고리즘 바로알고] issue 모아보기</h3>
+        </div>
+        <div class="slider-wrapper">
+            <button class="arrow-btn prev-btn">◀</button>
+            <div class="slider-track">
+                
+                <a href="https://youtu.be/zhT68qHTKcs?si=WCa5EsXuDp0NpFi6" target="_blank" class="link-card">
+                    <div class="card-image"><img src="https://i.ytimg.com/vi/zhT68qHTKcs/maxresdefault.jpg" alt="유튜브 썸네일"></div>
+                    <div class="card-content">
+                        <h4>우리의 혐오와 편향을 그대로 답습해 만들어진 인공지능... #알쓸범잡</h4>
+                        <p class="link-url">tvN Joy</p>
+                        <p class="card-cta">영상 보기 →</p>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=bm17qCUjn3o" target="_blank" class="link-card">
+                    <div class="card-image"><img src="https://i.ytimg.com/vi/bm17qCUjn3o/maxresdefault.jpg" alt="유튜브 썸네일"></div>
+                    <div class="card-content">
+                        <h4>빠니보틀이 1시간짜리 긴 영상을 올리는 이유</h4>
+                        <p class="link-url">잡식맨 JOBXICMAN</p>
+                        <p class="card-cta">영상 보기 →</p>
+                    </div>
+                </a>
+
+                <a href="https://youtu.be/b3tyo79mUVI?si=sLH3grBX6MY1HJEK" target="_blank" class="link-card">
+                    <div class="card-image"><img src="https://i.ytimg.com/vi/b3tyo79mUVI/maxresdefault.jpg" alt="유튜브 썸네일"></div>
+                    <div class="card-content">
+                        <h4>AI 편향, 알고리즘의 함정에서 아이를 지키는 법</h4>
+                        <p class="link-url">헬로tv뉴스</p>
+                        <p class="card-cta">영상 보기 →</p>
+                    </div>
+                </a>
+
+                <a href="https://youtu.be/dsW6kUpWz7Q?si=R6e017T-Ku1Vgo9M" target="_blank" class="link-card">
+                    <div class="card-image"><img src="https://i.ytimg.com/vi/dsW6kUpWz7Q/sddefault.jpg" alt="유튜브 썸네일"></div>
+                    <div class="card-content">
+                        <h4>알고리즘대로 보기만 하면 세상과 단절된다고?</h4>
+                        <p class="link-url">방송미디어통신위원회</p>
+                        <p class="card-cta">영상 보기 →</p>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=_8W7KBTo5_E" target="_blank" class="link-card">
+                    <div class="card-image"><img src="https://i.ytimg.com/vi/_8W7KBTo5_E/maxresdefault.jpg" alt="유튜브 썸네일"></div>
+                    <div class="card-content">
+                        <h4>당신의 알고리즘에 이 영상이 뜬 이유</h4>
+                        <p class="link-url">1분만</p>
+                        <p class="card-cta">영상 보기 →</p>
+                    </div>
+                </a>
+
+            </div>
+            <button class="arrow-btn next-btn">▶</button>
+        </div>
+    </section>
+
     <section class="slider-section" id="filterbubble">
         <div class="section-title-wrap">
             <h3 class="section-title">필터버블이 무엇이길래? 최신 뉴스 모음</h3>
@@ -360,29 +418,10 @@
                     </div>
                 </a>
 
-                <a href="https://www.newsspirit.kr/news/articleView.html?idxno=30054" target="_blank" class="link-card">
-                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
-                    <div class="card-content">
-                        <h4>필터버블에 갇힌 대한민국···알고리즘이 키우는 이념 갈등</h4>
-                        <p class="card-cta">기사 읽기 →</p>
-                    </div>
-                </a>
-
-
-
                 <a href="https://www.edaily.co.kr/News/Read?newsId=01725286645315752&mediaCodeNo=257" target="_blank" class="link-card">
                     <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
                     <div class="card-content">
                         <h4>"몇번 보니 가짜뉴스로 도배"…편향된 알고리즘의 포로들</h4>
-                        <p class="card-cta">기사 읽기 →</p>
-                    </div>
-                </a>
-
-
-                <a href="https://www.dginclusion.com/news/articleView.html?idxno=1329" target="_blank" class="link-card">
-                    <div class="card-image"><img src="News.png" alt="뉴스 썸네일"></div>
-                    <div class="card-content">
-                        <h4>AI 편향이 사회를 분열시키는 보이지 않는 방식</h4>
                         <p class="card-cta">기사 읽기 →</p>
                     </div>
                 </a>
