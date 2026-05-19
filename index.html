@@ -80,8 +80,6 @@
         }
         .column-link-col:hover { transform: translateY(-5px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
         .column-link-col .we-text { color: var(--mint); font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; }
-        
-        /* h2 양쪽 정렬(justify) 적용 */
         .column-link-col h2 { font-size: 1.6rem; font-weight: 500; margin-bottom: 25px; line-height: 1.4; word-break: keep-all; text-align: justify; }
         .column-link-col .cta-text { color: var(--mint); font-weight: 700; }
 
@@ -105,7 +103,7 @@
             background-color: rgba(0, 164, 149, 0.15); z-index: -1;
         }
 
-        /* 슬라이더 영역 */
+        /* 공통 슬라이더 영역 */
         .slider-section { margin-bottom: 100px; }
         .slider-wrapper {
             position: relative; display: flex; align-items: center;
@@ -119,7 +117,7 @@
         .slider-track::-webkit-scrollbar-track { background: var(--gray); border-radius: 3px; }
         .slider-track::-webkit-scrollbar-thumb { background: var(--mint); border-radius: 3px; }
 
-        /* 일반 카드 디자인 */
+        /* 일반 카드 디자인 (정보 편향성, 리서치, 뉴스 등) */
         .link-card {
             flex: 0 0 80%; 
             max-width: 900px;
@@ -144,22 +142,6 @@
             object-fit: cover; 
         }
 
-        /* 🎬 유튜브 영상 전용 맞춤 카드 디자인 */
-        .youtube-card {
-            max-width: 800px; /* 영상에 조금 더 집중할 수 있는 폭 */
-        }
-        .youtube-card .card-image {
-            height: auto; 
-            aspect-ratio: 16 / 9; /* 유튜브 썸네일 규격(16:9) 적용 */
-            background-color: #111111; /* 이미지가 남을 경우 검은색 배경으로 레터박스 느낌 연출 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .youtube-card .card-image img {
-            object-fit: contain; /* 이미지가 잘리지 않고 가운데에 딱 맞게 들어감 */
-        }
-        
         .card-content {
             padding: 40px;
             display: flex;
@@ -169,6 +151,34 @@
         .card-content h4 { font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; word-break: keep-all; }
         .card-content .link-url { color: var(--sub-text); font-size: 1rem; word-break: keep-all; margin-bottom: 20px; }
         .card-content .card-cta { color: var(--mint); font-weight: 700; font-size: 1rem; text-align: right; }
+
+
+        /* 🎬 유튜브 전용 슬라이더 및 맞춤 카드 디자인 (수정됨) */
+        .youtube-slider-wrapper {
+            max-width: 650px; /* 전체 가로화면을 채우지 않도록 박스 축소 */
+            margin: 0 auto; /* 화면 정중앙에 배치 */
+            border-top: none; /* 선 제거로 깔끔하게 */
+        }
+        .youtube-slider-wrapper .slider-track {
+            scroll-snap-type: x mandatory; /* 스크롤 시 카드가 중간에 안 멈추고 자석처럼 딱 맞춰짐 */
+        }
+        .youtube-card {
+            flex: 0 0 100%; /* 부모 넓이(650px)를 100% 채워서 한 번에 무조건 하나만 보이게 함 */
+            max-width: 100%;
+            scroll-snap-align: center; /* 스냅 고정점 설정 */
+        }
+        .youtube-card .card-image {
+            height: auto; 
+            aspect-ratio: 16 / 9; /* 유튜브 썸네일 전용 16:9 규격 */
+            background-color: #111111; /* 빈 공간은 검은색 레터박스로 채움 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .youtube-card .card-image img {
+            object-fit: contain; /* 이미지가 잘리지 않고 전체가 쏙 들어가게 설정 */
+        }
+
 
         /* 슬라이드 화살표 버튼 */
         .arrow-btn {
@@ -198,6 +208,7 @@
             .card-image { height: 200px; }
             .card-content { padding: 30px; }
             .section-title::before { left: 0; top: -15px; transform: none; }
+            .youtube-slider-wrapper { max-width: 100%; } /* 모바일에서는 꽉 차게 */
         }
     </style>
 </head>
@@ -236,10 +247,10 @@
     </section>
 
     <section class="slider-section" id="issue">
-        <div class="section-title-wrap">
-            <h3 class="section-title">알고리즘 issue 모아보기</h3>
+        <div class="section-title-wrap" style="text-align: center;"> <h3 class="section-title">알고리즘 issue 모아보기</h3>
         </div>
-        <div class="slider-wrapper">
+        
+        <div class="slider-wrapper youtube-slider-wrapper">
             <button class="arrow-btn prev-btn">◀</button>
             <div class="slider-track">
                 
@@ -395,6 +406,15 @@
                     </div>
                 </a>
 
+                <a href="https://www.kpf.or.kr/front/research/selfDetail.do?miv_pageNo=&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600276&link_g_topmenu_id=9dade495161e4a598d44afd169b5e271&link_g_submenu_id=16b7ff86f5b44d94bae6b83d36283511&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
+                    <div class="card-image"><img src="KPF.png" alt="KPF 연구자료"></div>
+                    <div class="card-content">
+                        <h4>미디어 연구 보고서 2</h4>
+                        <p class="link-url">미디어 플랫폼 알고리즘 투명성 제고 및 수용자 보호 방안</p>
+                        <p class="card-cta">보고서 읽기 →</p>
+                    </div>
+                </a>
+
                 <a href="https://www.kpf.or.kr/front/research/selfDetail.do?miv_pageNo=2&miv_pageSize=&total_cnt=&LISTOP=&mode=W&seq=600080&link_g_topmenu_id=9dade495161e4a598d44afd169b5e271&link_g_submenu_id=16b7ff86f5b44d94bae6b83d36283511&link_g_homepage=F&publish_startdt=&publish_enddt=&searchkey=all1&searchtxt=" target="_blank" class="link-card">
                     <div class="card-image"><img src="KPF.png" alt="KPF 연구자료"></div>
                     <div class="card-content">
@@ -425,7 +445,7 @@
                     </div>
                 </a>
                 <a href="https://www.journalist.or.kr/news/article.html?no=56994" target="_blank" class="link-card">
-                    <div class="card-image"><img src="JAK.png" alt="JAK.png"></div>
+                    <div class="card-image"><img src="KPF.png" alt="KPF.png"></div>
                     <div class="card-content">
                         <h4>숏폼 이용자 87.1% "영상 중독성 있다"</h4>
                         <p class="card-cta">기사 읽기 →</p>
@@ -524,6 +544,9 @@
         const track = wrapper.querySelector('.slider-track');
         const prev = wrapper.querySelector('.prev-btn');
         const next = wrapper.querySelector('.next-btn');
+        
+        // 유튜브 영역인지 확인하는 변수
+        const isYoutubeSlider = wrapper.classList.contains('youtube-slider-wrapper');
 
         // 오른쪽(다음)으로 넘기는 함수
         const scrollNext = () => {
@@ -550,12 +573,14 @@
             track.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
         };
 
-        // 버튼 클릭 이벤트 연결
+        // 수동 버튼 클릭 이벤트 연결
         prev.addEventListener('click', scrollPrev);
         next.addEventListener('click', scrollNext);
 
-        // 5초(5000ms)마다 자동으로 다음으로 넘기기
-        setInterval(scrollNext, 5000);
+        // 유튜브 슬라이더일 때만 5초 자동 넘김 실행
+        if (isYoutubeSlider) {
+            setInterval(scrollNext, 5000);
+        }
     });
 </script>
 
