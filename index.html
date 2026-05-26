@@ -46,24 +46,20 @@
         header nav a { text-decoration: none; color: var(--gray-dark); font-weight: 600; font-size: 1rem; transition: 0.2s; }
         header nav a:hover { color: var(--mint); }
 
-        /* ✅ 최상단 배너 (이미지 비율에 맞게 반응형 높이로 수정) */
+        /* ✅ 최상단 배너 (이미지 원본 비율 그대로, 절대 안 잘리게 수정) */
         .main-banner {
             margin-top: 100px;
-            background: linear-gradient(135deg, #F4F6F8 0%, #E9ECEF 100%);
-            border-radius: var(--round);
-            width: 100%;
-            aspect-ratio: 16 / 10; /* main.png 비율에 최적화 */
-            max-height: 650px; /* PC에서 너무 거대해지는 것 방지 */
             margin-bottom: 100px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--sub-text); font-size: 1.2rem; font-weight: 500;
-            position: relative; overflow: hidden;
+            border-radius: var(--round);
+            overflow: hidden;
             border: var(--border);
+            /* 만약 고정된 높이를 원하신다면 아래 두 줄을 지우고 height: 520px; 을 넣으시면 됩니다. */
         }
         .main-banner img {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            width: 100%;
+            height: auto; /* 고정 높이 대신 auto를 주면 이미지가 1px도 안 잘립니다 */
+            display: block;
         }
-        .main-banner span { z-index: 1; }
 
         /* 1단: 포스터 & 칼럼 링크 */
         .row-2 { display: flex; gap: 40px; margin-bottom: 120px; }
