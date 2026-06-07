@@ -34,7 +34,7 @@
             min-height: 100vh;
         }
 
-        /* 헤더 (메인과 동일) */
+        /* 헤더 */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: 80px;
             background-color: rgba(255, 255, 255, 0.85); 
@@ -57,8 +57,6 @@
             padding: 60px;
             text-align: center;
             position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
         }
 
         /* 프로그레스 바 */
@@ -72,26 +70,16 @@
             width: 0%; transition: width 0.4s ease;
         }
 
-        /* 뱃지 */
+        /* 뱃지 및 텍스트 */
         .badge {
             display: inline-block; background-color: var(--mint-light); color: var(--mint);
             font-size: 0.85rem; font-weight: 800; padding: 6px 14px; border-radius: 20px;
             margin-bottom: 20px;
         }
-
-        /* 시작 & 질문 텍스트 */
         .title { font-size: 2.2rem; font-weight: 800; margin-bottom: 20px; word-break: keep-all; line-height: 1.3; }
         .desc { font-size: 1.1rem; color: var(--sub-text); margin-bottom: 40px; word-break: keep-all; }
         
-        /* 버튼 디자인 */
-        .btn-start {
-            background-color: var(--mint); color: var(--white);
-            font-size: 1.2rem; font-weight: 700; border: none; border-radius: 30px;
-            padding: 16px 40px; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 8px 16px rgba(0, 164, 149, 0.2);
-        }
-        .btn-start:hover { background-color: var(--mint-hover); transform: translateY(-3px); }
-
+        /* 세로형 옵션 버튼 */
         .options-wrapper { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; }
         .btn-option {
             background-color: var(--white); border: 2px solid #E5E8EB; color: var(--gray-dark);
@@ -100,10 +88,53 @@
         }
         .btn-option:hover { border-color: var(--mint); color: var(--mint); background-color: var(--mint-light); transform: translateY(-2px); }
 
-        /* 결과 화면 전용 스타일 */
-        .score-box {
-            font-size: 5rem; font-weight: 900; color: var(--mint); margin-bottom: 10px; line-height: 1;
+        /* ✅ 가로형 오선지(Likert Scale) UI */
+        .likert-wrapper {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-top: 50px; position: relative;
         }
+        /* 뒤에 깔리는 가로선 */
+        .likert-wrapper::before {
+            content: ''; position: absolute; top: 16px; left: 5%; right: 5%;
+            height: 4px; background-color: #E5E8EB; z-index: 1; border-radius: 2px;
+        }
+        .likert-item {
+            display: flex; flex-direction: column; align-items: center;
+            flex: 1; z-index: 2; cursor: pointer;
+        }
+        .likert-circle {
+            width: 36px; height: 36px; border-radius: 50%;
+            background-color: var(--white); border: 4px solid #E5E8EB;
+            margin-bottom: 15px; transition: 0.2s;
+        }
+        .likert-item:hover .likert-circle {
+            border-color: var(--mint); background-color: var(--mint);
+            box-shadow: 0 0 0 6px var(--mint-light);
+        }
+        .likert-label {
+            font-size: 0.95rem; font-weight: 700; color: var(--gray-dark);
+            text-align: center; word-break: keep-all; line-height: 1.3;
+        }
+        .likert-item:hover .likert-label { color: var(--mint); }
+
+        /* 시작 버튼 & 이전 버튼 */
+        .btn-start {
+            background-color: var(--mint); color: var(--white);
+            font-size: 1.2rem; font-weight: 700; border: none; border-radius: 30px;
+            padding: 16px 40px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 8px 16px rgba(0, 164, 149, 0.2);
+        }
+        .btn-start:hover { background-color: var(--mint-hover); transform: translateY(-3px); }
+        
+        .btn-prev {
+            margin-top: 40px; background: none; border: none; color: #999;
+            font-size: 1rem; font-weight: 600; text-decoration: underline;
+            cursor: pointer; display: none; transition: 0.2s;
+        }
+        .btn-prev:hover { color: var(--black); }
+
+        /* 결과 화면 */
+        .score-box { font-size: 5rem; font-weight: 900; color: var(--mint); margin-bottom: 10px; line-height: 1; }
         .tier-title { font-size: 1.8rem; font-weight: 800; color: var(--black); margin-bottom: 20px; }
         .result-desc { font-size: 1.1rem; color: var(--gray-dark); background-color: var(--gray); padding: 30px; border-radius: 16px; margin-bottom: 30px; line-height: 1.6; text-align: justify; word-break: keep-all;}
         
@@ -126,7 +157,10 @@
         @media (max-width: 768px) {
             .quiz-container { padding: 40px 20px; margin-top: 100px; width: 90%; }
             header { padding: 0 20px; }
-            .title { font-size: 1.8rem; }
+            .title { font-size: 1.6rem; }
+            .likert-label { font-size: 0.8rem; letter-spacing: -0.5px;}
+            .likert-circle { width: 28px; height: 28px; border-width: 3px; }
+            .likert-wrapper::before { top: 12px; }
         }
     </style>
 </head>
@@ -151,11 +185,14 @@
     <!-- 퀴즈 화면 -->
     <div id="quizScreen" class="hidden">
         <div class="progress-bar" id="progressBar" style="display: block;"><div class="progress-fill" id="progressFill"></div></div>
-        <span class="badge" id="qCategory">영상 미디어 관련</span>
-        <h2 class="title" id="qText" style="font-size: 1.6rem; text-align: left;">질문이 들어갈 자리입니다.</h2>
-        <div class="options-wrapper" id="optionsWrapper">
-            <!-- 버튼이 자바스크립트로 생성됨 -->
-        </div>
+        <span class="badge" id="qCategory">카테고리</span>
+        <h2 class="title" id="qText" style="font-size: 1.5rem; text-align: left;">질문</h2>
+        
+        <!-- 질문 옵션 영역 -->
+        <div id="optionsWrapper"></div>
+
+        <!-- 이전 질문 버튼 -->
+        <button class="btn-prev" id="btnPrev" onclick="goBack()">← 이전 질문으로</button>
     </div>
 
     <!-- 결과 화면 -->
@@ -163,23 +200,18 @@
         <span class="badge">진단 완료</span>
         <div class="score-box"><span id="scoreText">0</span><span style="font-size: 2rem;">점</span></div>
         <h3 class="tier-title" id="tierTitle">티어 타이틀</h3>
-        <p class="result-desc" id="resultDesc">결과 설명이 여기에 나옵니다.</p>
+        <p class="result-desc" id="resultDesc">결과 설명</p>
 
-        <!-- 조건부 맞춤 추천 1 (3-1 아니오) -->
         <div class="recommend-box" id="rec-tools">
             <h4>💡 도구가 필요하시군요!</h4>
-            <p>뉴스의 정치적 성향과 편향도를 분석해 주는 유용한 도구들을 아직 모르신다면, 캠페인 페이지에서 꼭 확인해 보세요.</p>
+            <p>뉴스의 정치적 성향과 편향도를 분석해 주는 유용한 도구들을 아직 모르신다면, 메인 페이지에서 꼭 확인해 보세요.</p>
             <a href="index.html#bias" class="recommend-link">정보 편향성 체크 도구 보기 →</a>
         </div>
-
-        <!-- 조건부 맞춤 추천 2 (3-2 아니오) -->
         <div class="recommend-box" id="rec-research">
             <h4>💡 심도 있는 통찰이 필요하시군요!</h4>
-            <p>알고리즘이 우리에게 미치는 영향이 궁금하신가요? 국내 미디어 실태 조사와 DBpia의 핵심 논문들을 모아두었습니다.</p>
+            <p>알고리즘이 우리에게 미치는 영향이 궁금하신가요? 국내 미디어 실태 조사와 핵심 논문들을 모아두었습니다.</p>
             <a href="index.html#media" class="recommend-link">실태 및 연구 자료 보기 →</a>
         </div>
-
-        <!-- 조건부 맞춤 추천 3 (3-3 아니오) -->
         <div class="recommend-box" id="rec-issue">
             <h4>💡 문제의 본질을 파악할 시간!</h4>
             <p>알고리즘 문제가 왜 발생할 수밖에 없는지, 핵심 원리를 짚어주는 흥미로운 유튜브 영상들을 선별해 두었습니다.</p>
@@ -189,38 +221,35 @@
 </div>
 
 <script>
-    // 퀴즈 데이터
     const questions = [
-        // 카테고리 1
-        { category: "영상 미디어 이용 습관", q: "1. 하루 평균 영상 미디어(유튜브, 숏폼 등) 이용 시간이 어떻게 되시나요?", opts: [ {text: "1시간 미만", score: 5}, {text: "1~2시간", score: 4}, {text: "2~3시간", score: 3}, {text: "3~4시간", score: 2}, {text: "4시간 이상", score: 1} ] },
-        { category: "영상 미디어 이용 습관", q: "2. 주로 시청하는 영상의 길이는 어느 정도인가요?", opts: [ {text: "긴 길이의 다큐/영화 등", score: 5}, {text: "10~20분 일반 영상", score: 4}, {text: "5~10분 영상", score: 3}, {text: "1~5분 영상", score: 2}, {text: "1분 미만 숏폼", score: 1} ] },
-        { category: "영상 미디어 이용 습관", q: "3. 영상 콘텐츠를 탐색할 때 방식의 비중은 어떤가요?", opts: [ {text: "100% 직접 검색", score: 5}, {text: "주로 검색, 가끔 자동 추천", score: 4}, {text: "직접 검색과 자동 추천 반반", score: 3}, {text: "주로 자동 추천, 가끔 검색", score: 2}, {text: "100% 알고리즘 자동 추천", score: 1} ] },
-        { category: "영상 미디어 이용 습관", q: "4. 영상 플랫폼의 '관심 없음' 기능을 알고 적극적으로 사용하시나요?", opts: [ {text: "예", score: 5}, {text: "아니오", score: 0} ] },
-        { category: "영상 미디어 이용 습관", q: "5. 유튜브 등의 장르별/키워드별 탐색 기능을 적극적으로 사용하시나요?", opts: [ {text: "예", score: 5}, {text: "아니오", score: 0} ] },
-        { category: "영상 미디어 이용 습관", q: "6. 알고리즘 추천 중지 기능을 쓰거나 주기적으로 방문/시청 기록을 삭제하시나요?", opts: [ {text: "예", score: 5}, {text: "아니오", score: 0} ] },
-        // 카테고리 2
-        { category: "신뢰 및 인지", q: "7. 자동 추천 콘텐츠는 내게 필요한 정보를 주는 데 도움을 준다.", opts: [ {text: "매우 그렇다", score: 1}, {text: "그렇다", score: 3}, {text: "보통이다", score: 5}, {text: "아니다", score: 3}, {text: "전혀 아니다", score: 1} ] },
-        { category: "신뢰 및 인지", q: "8. 나는 플랫폼의 추천 알고리즘을 신뢰한다.", opts: [ {text: "매우 그렇다", score: 1}, {text: "그렇다", score: 3}, {text: "보통이다", score: 5}, {text: "아니다", score: 3}, {text: "전혀 아니다", score: 1} ] },
-        { category: "신뢰 및 인지", q: "9. 플랫폼 이용 시 나오는 콘텐츠는 평소 나의 생각을 보강해준다.", opts: [ {text: "매우 그렇다 (확증 편향 높음)", score: 0}, {text: "그렇다", score: 2}, {text: "보통이다", score: 5}, {text: "아니다", score: 8}, {text: "전혀 아니다", score: 10} ] },
-        { category: "신뢰 및 인지", q: "10. 자동 추천을 이용하지 않으면 편향적인 정보로부터 무조건 자유로워질 수 있다.", opts: [ {text: "매우 그렇다", score: 1}, {text: "그렇다", score: 3}, {text: "보통이다", score: 5}, {text: "아니다", score: 3}, {text: "전혀 아니다", score: 1} ] },
-        { category: "신뢰 및 인지", q: "11. 특정한 정보를 검색할 때 나는 일부러 서로 다른 두 관점의 자료를 수집한다.", opts: [ {text: "예", score: 15}, {text: "아니오", score: 0} ] },
-        // 카테고리 3
-        { category: "도구 및 리터러시", q: "12. 나는 뉴스의 편향 정도를 체크할 수 있는 도구를 알고 이를 활용하고 있다.", id: "q3_1", opts: [ {text: "예", score: 10}, {text: "아니오", score: 0, flag: "tools"} ] },
-        { category: "도구 및 리터러시", q: "13. 나는 알고리즘이 수용자에게 어떤 영향을 끼치는지 명확히 알고 있다.", id: "q3_2", opts: [ {text: "예", score: 10}, {text: "아니오", score: 0, flag: "research"} ] },
-        { category: "도구 및 리터러시", q: "14. 알고리즘 관련 문제가 수용자에게 발생할 수밖에 없는 이유를 명확히 알고 있다.", id: "q3_3", opts: [ {text: "예", score: 10}, {text: "아니오", score: 0, flag: "issue"} ] }
+        // 카테고리 1 (세로형)
+        { type: "vertical", category: "영상 미디어 이용 습관", q: "1. 하루 평균 영상 미디어(유튜브, 숏폼 등) 이용 시간이 어떻게 되시나요?", opts: [ {text: "1시간 미만", score: 5}, {text: "1~2시간", score: 4}, {text: "2~3시간", score: 3}, {text: "3~4시간", score: 2}, {text: "4시간 이상", score: 1} ] },
+        { type: "vertical", category: "영상 미디어 이용 습관", q: "2. 주로 시청하는 영상의 길이는 어느 정도인가요?", opts: [ {text: "1시간 이상", score: 5}, {text: "20분 이상 1시간 미만", score: 4}, {text: "5분 이상 20분 미만", score: 3}, {text: "1분 30초 이상 5분 미만", score: 2}, {text: "1분 30초 미만", score: 1} ] },
+        { type: "vertical", category: "영상 미디어 이용 습관", q: "3. 영상 콘텐츠를 탐색할 때 방식의 비중은 어떤가요?", opts: [ {text: "직접 검색만을 사용한다.", score: 5}, {text: "주로 직접 검색을 사용하고, 가끔 자동 추천을 이용한다.", score: 4}, {text: "직접 검색과 자동 추천을 비슷한 비율로 사용한다.", score: 3}, {text: "주로 자동 추천을 이용하고, 가끔 직접 검색을 한다.", score: 2}, {text: "100% 자동 추천만을 이용한다.", score: 1} ] },
+        { type: "vertical", category: "영상 미디어 이용 습관", q: "4. 영상 플랫폼의 '관심 없음' 기능을 알고 적극적으로 사용하시나요?", opts: [ {text: "예", score: 5}, {text: "아니오", score: 0} ] },
+        { type: "vertical", category: "영상 미디어 이용 습관", q: "5. 유튜브 등의 장르별/키워드별 탐색 기능을 적극적으로 사용하시나요?", opts: [ {text: "예", score: 5}, {text: "아니오", score: 0} ] },
+        { type: "vertical", category: "영상 미디어 이용 습관", q: "6. 알고리즘 추천 중지 기능을 쓰거나 주기적으로 시청 기록을 삭제하시나요?", opts: [ {text: "예", score: 5}, {text: "아니오", score: 0} ] },
+        // 카테고리 2 (가로 오선지 형태)
+        { type: "likert", category: "신뢰 및 인지", q: "7. 자동 추천 콘텐츠는 내게 필요한 정보를 주는 데 도움을 준다.", opts: [ {text: "(매우 그렇다)", score: 1}, {text: "(그렇다)", score: 3}, {text: "(보통이다)", score: 5}, {text: "(그렇지 않다)", score: 3}, {text: "(매우 그렇지 않다)", score: 1} ] },
+        { type: "likert", category: "신뢰 및 인지", q: "8. 나는 플랫폼의 추천 알고리즘을 신뢰한다.", opts: [ {text: "(매우 그렇다)", score: 1}, {text: "(그렇다)", score: 3}, {text: "(보통이다)", score: 5}, {text: "(그렇지 않다)", score: 3}, {text: "(매우 그렇지 않다)", score: 1} ] },
+        { type: "likert", category: "신뢰 및 인지", q: "9. 플랫폼 이용 시 나오는 콘텐츠는 평소 나의 생각을 보강해준다.", opts: [ {text: "(매우 그렇다)", score: 0}, {text: "(그렇다)", score: 2}, {text: "(보통이다)", score: 5}, {text: "(그렇지 않다)", score: 8}, {text: "(매우 그렇지 않다)", score: 10} ] },
+        { type: "likert", category: "신뢰 및 인지", q: "10. 자동 추천을 이용하지 않으면 편향적인 정보로부터 자유로워질 수 있다.", opts: [ {text: "(매우 그렇다)", score: 1}, {text: "(그렇다)", score: 3}, {text: "(보통이다)", score: 5}, {text: "(그렇지 않다)", score: 3}, {text: "(매우 그렇지 않다)", score: 1} ] },
+        { type: "vertical", category: "신뢰 및 인지", q: "11. 특정한 정보를 검색할 때 나는 일부러 서로 다른 두 관점의 자료를 수집한다.", opts: [ {text: "예", score: 15}, {text: "아니오", score: 0} ] },
+        // 카테고리 3 (세로형)
+        { type: "vertical", category: "도구 및 리터러시", q: "12. 나는 뉴스의 편향 정도를 체크할 수 있는 도구를 알고 이를 활용하고 있다.", opts: [ {text: "예", score: 10}, {text: "아니오", score: 0, flag: "tools"} ] },
+        { type: "vertical", category: "도구 및 리터러시", q: "13. 나는 알고리즘이 수용자에게 어떤 영향을 끼치는지 명확히 알고 있다.", opts: [ {text: "예", score: 10}, {text: "아니오", score: 0, flag: "research"} ] },
+        { type: "vertical", category: "도구 및 리터러시", q: "14. 알고리즘 관련 문제가 수용자에게 발생할 수밖에 없는 이유를 명확히 알고 있다.", opts: [ {text: "예", score: 10}, {text: "아니오", score: 0, flag: "issue"} ] }
     ];
 
     let currentIndex = 0;
     let totalScore = 0;
-    
-    // 맞춤 추천 트리거용 변수
-    let needTools = false;
-    let needResearch = false;
-    let needIssue = false;
+    let historyStack = []; // 이전 질문으로 돌아가기 위한 히스토리 배열
 
     const introScreen = document.getElementById('introScreen');
     const quizScreen = document.getElementById('quizScreen');
     const resultScreen = document.getElementById('resultScreen');
+    const optsWrap = document.getElementById('optionsWrapper');
+    const btnPrev = document.getElementById('btnPrev');
     
     function startQuiz() {
         introScreen.classList.add('hidden');
@@ -233,29 +262,52 @@
         document.getElementById('qCategory').innerText = q.category;
         document.getElementById('qText').innerText = q.q;
         
-        // 진행률 업데이트
+        // 진행률 게이지 업데이트
         document.getElementById('progressFill').style.width = ((currentIndex + 1) / questions.length * 100) + '%';
+        optsWrap.innerHTML = ""; 
 
-        const optsWrap = document.getElementById('optionsWrapper');
-        optsWrap.innerHTML = ""; // 기존 버튼 초기화
-        
-        q.opts.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'btn-option';
-            btn.innerText = opt.text;
-            btn.onclick = () => selectOption(opt.score, opt.flag);
-            optsWrap.appendChild(btn);
-        });
+        // 이전 버튼 표시 여부
+        btnPrev.style.display = currentIndex > 0 ? "inline-block" : "none";
+
+        // 질문 타입에 따른 렌더링 분기
+        if (q.type === "likert") {
+            const likertDiv = document.createElement('div');
+            likertDiv.className = 'likert-wrapper';
+            q.opts.forEach(opt => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'likert-item';
+                itemDiv.onclick = () => selectOption(opt.score, opt.flag);
+                
+                const circle = document.createElement('div');
+                circle.className = 'likert-circle';
+                
+                const label = document.createElement('div');
+                label.className = 'likert-label';
+                label.innerText = opt.text;
+
+                itemDiv.appendChild(circle);
+                itemDiv.appendChild(label);
+                likertDiv.appendChild(itemDiv);
+            });
+            optsWrap.appendChild(likertDiv);
+        } else {
+            const vertDiv = document.createElement('div');
+            vertDiv.className = 'options-wrapper';
+            vertDiv.style.marginTop = "0";
+            q.opts.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-option';
+                btn.innerText = opt.text;
+                btn.onclick = () => selectOption(opt.score, opt.flag);
+                vertDiv.appendChild(btn);
+            });
+            optsWrap.appendChild(vertDiv);
+        }
     }
 
     function selectOption(score, flag) {
+        historyStack.push({ score: score, flag: flag }); // 히스토리 저장
         totalScore += score;
-        
-        // 플래그 추적 (3-1, 3-2, 3-3에서 '아니오' 선택 시)
-        if (flag === "tools") needTools = true;
-        if (flag === "research") needResearch = true;
-        if (flag === "issue") needIssue = true;
-
         currentIndex++;
 
         if (currentIndex < questions.length) {
@@ -265,11 +317,28 @@
         }
     }
 
+    function goBack() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            const lastData = historyStack.pop(); // 방금 넣었던 값 빼기
+            totalScore -= lastData.score;
+            renderQuestion();
+        }
+    }
+
     function showResult() {
         quizScreen.classList.add('hidden');
         resultScreen.classList.remove('hidden');
+
+        // 플래그 최종 검사
+        let needTools = false, needResearch = false, needIssue = false;
+        historyStack.forEach(data => {
+            if (data.flag === "tools") needTools = true;
+            if (data.flag === "research") needResearch = true;
+            if (data.flag === "issue") needIssue = true;
+        });
         
-        // 숫자 카운트업 애니메이션
+        // 애니메이션 효과
         let currentNum = 0;
         const scoreEl = document.getElementById('scoreText');
         const interval = setInterval(() => {
@@ -280,11 +349,9 @@
                 currentNum++;
                 scoreEl.innerText = currentNum;
             }
-        }, 15); // 속도
+        }, 15);
 
-        let title = "";
-        let desc = "";
-
+        let title = ""; let desc = "";
         if (totalScore >= 80) {
             title = "알고리즘을 지배하는 능동적 항해자 ⛵";
             desc = "축하합니다! 당신은 이미 훌륭한 디지털 리터러시를 갖추고 있습니다. 알고리즘이 만들어낸 필터 버블의 존재를 명확히 인지하고 있으며, 수동적으로 끌려가는 대신 주체적으로 정보를 취사선택하고 계시는군요.<br><br>지금의 건강한 미디어 소비 습관을 유지해 주세요! 캠페인 홈페이지의 유용한 도구들을 주변에도 널리 알려주시면 어떨까요?";
@@ -299,7 +366,6 @@
         document.getElementById('tierTitle').innerText = title;
         document.getElementById('resultDesc').innerHTML = desc;
 
-        // 조건에 따른 추천 탭 보이기 (지연 표시로 자연스럽게)
         setTimeout(() => {
             if (needTools) document.getElementById('rec-tools').style.display = 'block';
             if (needResearch) document.getElementById('rec-research').style.display = 'block';
